@@ -1,0 +1,11 @@
+timestamp,source,destination,relay,delay_ms,signal_strength,ttl,status
+2026-07-15 10:00:01,Mars_Rover,Earth,Relay_A,1200,-72,64,Normal
+2026-07-15 10:00:10,Mars_Rover,Earth,Relay_A,1180,-71,64,Normal
+2026-07-15 10:00:25,Mars_Rover,Earth,Relay_A,1215,-73,64,Normal
+2026-07-15 10:01:02,Mars_Rover,Earth,Unknown_Relay,220,-25,64,Spoofing
+2026-07-15 10:01:40,Orbiter_1,Earth,Relay_B,1350,-74,64,Normal
+2026-07-15 10:02:05,Mars_Rover,Earth,Relay_A,1195,-72,64,Normal
+2026-07-15 10:02:50,Mars_Rover,Earth,Relay_A,1190,-71,64,Normal
+2026-07-15 10:03:10,Mars_Rover,Earth,Relay_A,4000,-90,64,Replay
+2026-07-15 10:03:45,Orbiter_1,Earth,Relay_B,1325,-73,64,Normal
+2026-07-15 10:04:15,Mars_Rover,Earth,Relay_X,300,-18,64,Injection
