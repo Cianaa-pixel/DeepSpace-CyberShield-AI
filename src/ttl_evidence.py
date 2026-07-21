@@ -6,27 +6,31 @@ def calculate_ttl(data):
 
     for _, row in data.iterrows():
 
-        # Every communication starts fully trusted
         trust = 100
 
-        # Rule 1: Unknown relay
+        # Unknown relay reduces trust
         if row["relay"] == "Unknown_Relay":
-            trust -= 40
-
-        # Rule 2: Very small delay
-        if row["delay_ms"] < 500:
-            trust -= 20
-
-        # Rule 3: Abnormally strong signal
-        if row["signal_strength"] > -30:
             trust -= 25
 
-        # Rule 4: Attack label
-        if row["status"] != "Normal":
+        # Delay anomaly
+        if row["delay_ms"] < 500 or row["delay_ms"] > 3000:
+            trust -= 20
+
+        # Signal anomaly
+        if row["signal_strength"] > -30:
+            trust -= 20
+
+        # Attack type penalty
+        if row["status"] == "Spoofing":
             trust -= 15
 
-        # Trust cannot go below zero
-        trust = max(trust, 0)
+        elif row["status"] == "Replay":
+            trust -= 20
+
+        elif row["status"] == "Injection":
+            trust -= 30
+
+        trust = max(0, trust)
 
         trust_scores.append(trust)
 

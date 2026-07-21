@@ -1,5 +1,6 @@
 from data_loader import load_data
 from ttl_evidence import calculate_ttl
+from tt1_decay import apply_dynamic_decay
 
 def main():
 
@@ -9,7 +10,9 @@ def main():
 
         dataset = calculate_ttl(dataset)
 
-        print("\nTrust Scores\n")
+        dataset = apply_dynamic_decay(dataset)
+
+        print("\n============== DeepSpace CyberShield AI ==============\n")
 
         print(
             dataset[
@@ -17,7 +20,10 @@ def main():
                     "source",
                     "relay",
                     "status",
-                    "trust_score"
+                    "trust_score",
+                    "dynamic_trust",
+                    "trust_level",
+                    "reason"
                 ]
             ]
         )
