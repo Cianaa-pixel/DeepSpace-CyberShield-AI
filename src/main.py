@@ -1,16 +1,20 @@
 from colorama import Fore, Style, init
+import pandas as pd
 
 from data_loader import load_data
 from ttl_evidence import calculate_ttl
-from ttl_decay import apply_dynamic_decay
+from tt1_decay import apply_dynamic_decay
 from dsslv import verify_signal_lineage
 
 # Initialize Colorama
 init(autoreset=True)
 
+# Show all columns if needed
+pd.set_option("display.max_columns", None)
+pd.set_option("display.width", None)
+
 
 def print_status(score):
-
     if score >= 80:
         return Fore.GREEN + "🟢 Trusted"
 
@@ -29,45 +33,55 @@ def print_status(score):
 
 def main():
 
-    # Load Dataset
+    # Load dataset
     dataset = load_data("dataset/communication_logs.csv")
 
     if dataset is None:
-        print(Fore.RED + "Failed to load dataset.")
+        print(Fore.RED + "\nFailed to load dataset.")
         return
 
-    # Step 1: Calculate Initial Trust Score
+    # Step 1 - TTL Evidence
     dataset = calculate_ttl(dataset)
 
-    # Step 2: Apply Dynamic TTL Decay
+    # Step 2 - Dynamic TTL Decay
     dataset = apply_dynamic_decay(dataset)
 
-    # Step 3: Verify Signal Lineage (DSSLV)
+    # Step 3 - Signal Lineage Verification
     dataset = verify_signal_lineage(dataset)
 
-    print(Fore.CYAN + "\n============= DeepSpace CyberShield AI =============\n")
-
-    # Assign Trust Level based on Dynamic Trust
+    # Step 4 - Trust Level
     dataset["trust_level"] = dataset["dynamic_trust"].apply(print_status)
 
-    # Display Results
-    print(
-        dataset[
-            [
-                "source",
-                "relay",
-                "status",
-                "trust_score",
-                "dynamic_trust",
-                "lineage_status",
-                "lineage_score",
-                "trust_level",
-                "reason"
-            ]
-        ]
-    )
+    print(Fore.CYAN + "\n================ DeepSpace CyberShield AI ================\n")
 
-    print(Fore.GREEN + "\nAnalysis Completed Successfully!")
+    # Display every communication record
+    for index, row in dataset.iterrows():
+
+        print(Fore.CYAN + "=" * 60)
+        print(Fore.WHITE + f"🛰️  Communication Record #{index + 1}")
+        print(Fore.CYAN + "=" * 60)
+
+        print(f"Source            : {row['source']}")
+        print(f"Destination       : {row['destination']}")
+        print(f"Relay             : {row['relay']}")
+        print(f"Status            : {row['status']}")
+
+        print()
+
+        print(f"Initial Trust     : {row['trust_score']}")
+        print(f"Dynamic Trust     : {row['dynamic_trust']}")
+        print(f"Lineage Status    : {row['lineage_status']}")
+        print(f"Lineage Score     : {row['lineage_score']}")
+
+        print()
+
+        print(f"Trust Level       : {row['trust_level']}")
+        print(f"Reason            : {row['reason']}")
+
+        print(Fore.CYAN + "=" * 60)
+        print()
+
+    print(Fore.GREEN + "✔ Analysis Completed Successfully!")
     print(Style.RESET_ALL)
 
 
