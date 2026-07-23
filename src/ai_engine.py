@@ -1,4 +1,7 @@
+import os
+import joblib
 import pandas as pd
+
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import (
     accuracy_score,
@@ -41,6 +44,8 @@ class AIEngine:
 
         print("\nDataset Loaded Successfully!")
 
+        return self.dataset
+
     # ----------------------------------------
 
     def prepare_features(self):
@@ -55,7 +60,36 @@ class AIEngine:
 
         self.model.fit(X)
 
-        print("Isolation Forest Model Trained Successfully!")
+        print("\nIsolation Forest Model Trained Successfully!")
+
+    # ----------------------------------------
+
+    def save_model(self):
+
+        os.makedirs("models", exist_ok=True)
+
+        joblib.dump(
+            self.model,
+            "models/isolation_forest.pkl"
+        )
+
+        print("AI Model Saved Successfully!")
+
+    # ----------------------------------------
+
+    def load_model(self):
+
+        model_path = "models/isolation_forest.pkl"
+
+        if os.path.exists(model_path):
+
+            self.model = joblib.load(model_path)
+
+            print("Existing AI Model Loaded!")
+
+            return True
+
+        return False
 
     # ----------------------------------------
 
@@ -67,7 +101,9 @@ class AIEngine:
 
         self.dataset["AI_Prediction"] = predictions
 
-        self.dataset["AI_Prediction"] = self.dataset["AI_Prediction"].replace({
+        self.dataset["AI_Prediction"] = self.dataset[
+            "AI_Prediction"
+        ].replace({
             1: "Normal",
             -1: "Anomaly"
         })
@@ -85,12 +121,30 @@ class AIEngine:
         predicted = self.dataset["AI_Prediction"]
 
         accuracy = accuracy_score(actual, predicted)
-        precision = precision_score(actual, predicted, pos_label="Anomaly")
-        recall = recall_score(actual, predicted, pos_label="Anomaly")
-        f1 = f1_score(actual, predicted, pos_label="Anomaly")
+
+        precision = precision_score(
+            actual,
+            predicted,
+            pos_label="Anomaly",
+            zero_division=0
+        )
+
+        recall = recall_score(
+            actual,
+            predicted,
+            pos_label="Anomaly",
+            zero_division=0
+        )
+
+        f1 = f1_score(
+            actual,
+            predicted,
+            pos_label="Anomaly",
+            zero_division=0
+        )
 
         print("\n======================================")
-        print("      AI MODEL PERFORMANCE")
+        print("        AI MODEL PERFORMANCE")
         print("======================================")
         print(f"Accuracy  : {accuracy*100:.2f}%")
         print(f"Precision : {precision*100:.2f}%")
@@ -98,4 +152,7 @@ class AIEngine:
         print(f"F1 Score  : {f1*100:.2f}%")
 
         print("\nConfusion Matrix")
+
         print(confusion_matrix(actual, predicted))
+
+        print("======================================")
