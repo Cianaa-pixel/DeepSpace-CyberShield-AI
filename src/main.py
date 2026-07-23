@@ -2,19 +2,20 @@ from colorama import Fore, Style, init
 import pandas as pd
 
 from data_loader import load_data
-from ttl_evidence import calculate_ttl
-from tt1_decay import apply_dynamic_decay
-from dsslv import verify_signal_lineage
+from ai_engine import AIEngine
 
 # Initialize Colorama
 init(autoreset=True)
 
-# Show all columns if needed
+# Display Settings
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", None)
 
 
+# ---------------------------------------------
+
 def print_status(score):
+
     if score >= 80:
         return Fore.GREEN + "🟢 Trusted"
 
@@ -31,59 +32,100 @@ def print_status(score):
         return Fore.MAGENTA + "⚫ Untrusted"
 
 
+# ---------------------------------------------
+
 def main():
 
-    # Load dataset
+    print(Fore.CYAN + "=" * 70)
+    print(Fore.CYAN + "           DeepSpace CyberShield AI")
+    print(Fore.CYAN + "=" * 70)
+
+    # -----------------------------
+    # Load Dataset
+    # -----------------------------
+
     dataset = load_data("dataset/communication_logs.csv")
 
     if dataset is None:
-        print(Fore.RED + "\nFailed to load dataset.")
+        print(Fore.RED + "\nDataset could not be loaded.")
         return
 
-    # Step 1 - TTL Evidence
-    dataset = calculate_ttl(dataset)
+    # -----------------------------
+    # AI Engine
+    # -----------------------------
 
-    # Step 2 - Dynamic TTL Decay
-    dataset = apply_dynamic_decay(dataset)
+    ai = AIEngine()
 
-    # Step 3 - Signal Lineage Verification
-    dataset = verify_signal_lineage(dataset)
+    ai.dataset = dataset
 
-    # Step 4 - Trust Level
-    dataset["trust_level"] = dataset["dynamic_trust"].apply(print_status)
+    ai.train_model()
 
-    print(Fore.CYAN + "\n================ DeepSpace CyberShield AI ================\n")
+    dataset = ai.predict()
 
-    # Display every communication record
-    for index, row in dataset.iterrows():
+    ai.evaluate_model()
 
-        print(Fore.CYAN + "=" * 60)
-        print(Fore.WHITE + f"🛰️  Communication Record #{index + 1}")
-        print(Fore.CYAN + "=" * 60)
+    # -----------------------------
+    # Trust Level
+    # -----------------------------
 
-        print(f"Source            : {row['source']}")
-        print(f"Destination       : {row['destination']}")
-        print(f"Relay             : {row['relay']}")
-        print(f"Status            : {row['status']}")
+    dataset["trust_level"] = dataset["trust_score"].apply(print_status)
 
+    # -----------------------------
+    # Dashboard
+    # -----------------------------
+
+    print(Fore.CYAN)
+    print("\n================ COMMUNICATION DASHBOARD ================\n")
+
+    # Display first 20 records
+    for index, row in dataset.head(20).iterrows():
+
+        print(Fore.CYAN + "=" * 65)
+        print(Fore.WHITE + f"🛰 Communication Record #{index+1}")
+        print(Fore.CYAN + "=" * 65)
+
+        print(f"Timestamp        : {row['timestamp']}")
+        print(f"Source           : {row['source']}")
+        print(f"Destination      : {row['destination']}")
+        print(f"Relay            : {row['relay']}")
+        print(f"Mission Phase    : {row['mission_phase']}")
         print()
 
-        print(f"Initial Trust     : {row['trust_score']}")
-        print(f"Dynamic Trust     : {row['dynamic_trust']}")
-        print(f"Lineage Status    : {row['lineage_status']}")
-        print(f"Lineage Score     : {row['lineage_score']}")
-
+        print(f"Status           : {row['status']}")
+        print(f"AI Prediction    : {row['AI_Prediction']}")
         print()
 
-        print(f"Trust Level       : {row['trust_level']}")
-        print(f"Reason            : {row['reason']}")
-
-        print(Fore.CYAN + "=" * 60)
+        print(f"TTL              : {row['ttl']}")
+        print(f"TTL Evidence     : {row['ttl_evidence']}")
+        print(f"DSSLV Score      : {row['dsslv_score']}")
+        print(f"Dynamic TTL      : {row['dynamic_ttl_trust']}")
         print()
 
-    print(Fore.GREEN + "✔ Analysis Completed Successfully!")
+        print(f"Trust Score      : {row['trust_score']:.2f}")
+        print(f"Trust Level      : {row['trust_level']}")
+
+        # Recommendation
+
+        if row["AI_Prediction"] == "Anomaly":
+
+            print(Fore.RED)
+            print("Recommendation   : Disconnect Relay")
+            print("Action           : Notify Ground Station")
+
+        else:
+
+            print(Fore.GREEN)
+            print("Recommendation   : Continue Communication")
+            print("Action           : No Threat Detected")
+
+        print(Fore.CYAN + "=" * 65)
+        print()
+
+    print(Fore.GREEN + "\n✔ DeepSpace CyberShield AI Execution Completed Successfully!")
     print(Style.RESET_ALL)
 
+
+# ---------------------------------------------
 
 if __name__ == "__main__":
     main()
