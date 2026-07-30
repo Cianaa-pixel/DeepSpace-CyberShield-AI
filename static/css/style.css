@@ -1,0 +1,1690 @@
+/* ==========================================================
+   DeepSpace CyberShield AI
+   Version 2.0 - Part 1
+   Global + Galaxy + Loader + Navbar
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root{
+
+    --primary:#00d9ff;
+    --secondary:#6f5cff;
+    --dark:#020611;
+    --glass:rgba(255,255,255,.08);
+    --border:rgba(255,255,255,.12);
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+    background:#020611;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#01040b;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(var(--primary),#009dff);
+
+    border-radius:20px;
+
+}
+
+/* =========================================
+   GALAXY BACKGROUND
+========================================= */
+
+.stars,
+.twinkling,
+.nebula,
+.shooting-stars{
+
+    position:fixed;
+    inset:0;
+    z-index:-10;
+
+}
+
+/* Star Layer 1 */
+
+.stars{
+
+    background-image:
+
+        radial-gradient(circle,#ffffff 1px,transparent 1px),
+        radial-gradient(circle,#9fe8ff 1px,transparent 1px);
+
+    background-size:
+
+        70px 70px,
+        120px 120px;
+
+    background-position:
+
+        0 0,
+        60px 60px;
+
+    animation:
+
+        starsMove 140s linear infinite;
+
+}
+
+/* Star Layer 2 */
+
+.twinkling{
+
+    background-image:
+
+        radial-gradient(circle,#fff 1px,transparent 1px);
+
+    background-size:150px 150px;
+
+    opacity:.35;
+
+    animation:
+
+        twinkle 4s ease-in-out infinite alternate,
+
+        starsMove2 220s linear infinite;
+
+}
+
+/* Nebula */
+
+.nebula{
+
+    background:
+
+    radial-gradient(circle at 20% 20%,
+    rgba(0,174,255,.18),
+    transparent 35%),
+
+    radial-gradient(circle at 80% 60%,
+    rgba(93,0,255,.20),
+    transparent 45%),
+
+    radial-gradient(circle at center,
+    rgba(0,255,255,.06),
+    transparent 60%);
+
+    filter:blur(20px);
+
+}
+
+/* =========================================
+   STAR ANIMATIONS
+========================================= */
+
+@keyframes starsMove{
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+    to{
+
+        transform:translateY(1000px);
+
+    }
+
+}
+
+@keyframes starsMove2{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-800px);
+
+    }
+
+}
+
+@keyframes twinkle{
+
+    from{
+
+        opacity:.2;
+
+    }
+
+    to{
+
+        opacity:.6;
+
+    }
+
+}
+
+/* =========================================
+   SHOOTING STARS
+========================================= */
+
+.shooting-stars::before,
+.shooting-stars::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:3px;
+    height:180px;
+
+    background:
+
+    linear-gradient(
+
+    rgba(255,255,255,1),
+
+    rgba(0,217,255,.2),
+
+    transparent);
+
+    transform:rotate(45deg);
+
+    animation:
+
+    shooting 8s linear infinite;
+
+}
+
+.shooting-stars::after{
+
+    animation-delay:4s;
+
+    left:75%;
+
+}
+
+@keyframes shooting{
+
+    from{
+
+        left:-15%;
+        top:-15%;
+
+    }
+
+    to{
+
+        left:120%;
+        top:120%;
+
+    }
+
+}
+
+/* =========================================
+   LOADER
+========================================= */
+
+#loader{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(circle,#071a3b,#01040b);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+
+    transition:.8s;
+
+}
+
+.loader-box{
+
+    text-align:center;
+
+}
+
+.loader-box h1{
+
+    color:var(--primary);
+
+    font-size:40px;
+
+    margin-bottom:20px;
+
+    text-shadow:
+
+    0 0 20px var(--primary);
+
+}
+
+#loading-text{
+
+    margin-bottom:25px;
+
+    letter-spacing:1px;
+
+}
+
+.progress{
+
+    width:350px;
+
+    height:12px;
+
+    background:#111827;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+}
+
+.progress-bar{
+
+    height:100%;
+
+    width:0;
+
+    border-radius:50px;
+
+    background:
+
+    linear-gradient(
+
+    90deg,
+
+    var(--primary),
+
+    #00ffb3);
+
+    animation:
+
+    loadingBar 4s forwards;
+
+}
+
+@keyframes loadingBar{
+
+    to{
+
+        width:100%;
+
+    }
+
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+nav{
+
+    position:fixed;
+
+    top:18px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:92%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 45px;
+
+    border-radius:60px;
+
+    background:rgba(7,15,32,.45);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.4s;
+
+    z-index:500;
+
+}
+
+.nav-scroll{
+
+    background:rgba(0,0,0,.65);
+
+    box-shadow:
+
+    0 10px 40px rgba(0,217,255,.18);
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo img{
+
+    width:55px;
+
+    filter:drop-shadow(0 0 15px var(--primary));
+
+}
+
+.logo span{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:var(--primary);
+
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:35px;
+
+}
+
+nav ul li a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:500;
+
+    position:relative;
+
+    transition:.3s;
+
+}
+
+nav ul li a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--primary);
+
+    transition:.3s;
+
+}
+
+nav ul li a:hover{
+
+    color:var(--primary);
+
+}
+
+nav ul li a:hover::after{
+
+    width:100%;
+
+}
+/* ==========================================================
+   HERO SECTION
+========================================================== */
+
+#hero{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:120px 8%;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* ---------------- LEFT SIDE ---------------- */
+
+.hero-left{
+
+    width:55%;
+
+    animation:heroFade 1.5s ease;
+
+}
+
+.hero-left h1{
+
+    font-size:82px;
+
+    font-weight:800;
+
+    line-height:1.05;
+
+    margin-bottom:20px;
+
+    text-shadow:
+
+        0 0 20px rgba(0,217,255,.35);
+
+}
+
+.hero-left h1 span{
+
+    color:var(--primary);
+
+    display:block;
+
+    text-shadow:
+
+        0 0 20px var(--primary),
+
+        0 0 40px var(--primary);
+
+}
+
+.hero-left h2{
+
+    font-size:28px;
+
+    color:#8fe9ff;
+
+    margin-bottom:30px;
+
+    font-weight:500;
+
+}
+
+.hero-left p{
+
+    font-size:18px;
+
+    line-height:1.9;
+
+    color:#d7d7d7;
+
+    margin-bottom:40px;
+
+    max-width:700px;
+
+}
+
+/* ---------------- BUTTONS ---------------- */
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:25px;
+
+    flex-wrap:wrap;
+
+}
+
+.primary-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:16px 34px;
+
+    border-radius:50px;
+
+    text-decoration:none;
+
+    color:#02111d;
+
+    background:linear-gradient(90deg,#00d9ff,#00ffb3);
+
+    font-weight:700;
+
+    transition:.35s;
+
+    box-shadow:
+
+        0 0 30px rgba(0,217,255,.45);
+
+}
+
+.primary-btn:hover{
+
+    transform:translateY(-5px) scale(1.03);
+
+    box-shadow:
+
+        0 0 45px rgba(0,217,255,.8);
+
+}
+
+.secondary-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:16px 34px;
+
+    border-radius:50px;
+
+    border:2px solid var(--primary);
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    backdrop-filter:blur(10px);
+
+}
+
+.secondary-btn:hover{
+
+    background:rgba(0,217,255,.15);
+
+    transform:translateY(-5px);
+
+}
+
+/* ---------------- RIGHT SIDE ---------------- */
+
+.hero-right{
+
+    width:40%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+}
+
+/* Earth Glow */
+
+.hero-right::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+
+    height:450px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(circle,
+
+        rgba(0,217,255,.35),
+
+        transparent 70%);
+
+    filter:blur(35px);
+
+    animation:pulseGlow 5s infinite;
+
+}
+
+/* ---------------- EARTH ---------------- */
+
+.earth{
+
+    width:360px;
+
+    animation:
+
+        rotateEarth 80s linear infinite,
+
+        floatEarth 6s ease-in-out infinite;
+
+    filter:
+
+        drop-shadow(0 0 40px rgba(0,217,255,.35));
+
+    z-index:5;
+
+}
+
+/* ---------------- SATELLITE ---------------- */
+
+.satellite{
+
+    position:absolute;
+
+    width:130px;
+
+    top:40px;
+
+    right:20px;
+
+    z-index:10;
+
+    animation:
+
+        orbitSatellite 10s linear infinite;
+
+    filter:
+
+        drop-shadow(0 0 15px rgba(255,255,255,.6));
+
+}
+
+/* ---------------- ANIMATIONS ---------------- */
+
+@keyframes heroFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(-50px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+@keyframes rotateEarth{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes floatEarth{
+
+    0%,100%{
+
+        translate:0 0;
+
+    }
+
+    50%{
+
+        translate:0 -18px;
+
+    }
+
+}
+
+@keyframes orbitSatellite{
+
+    0%{
+
+        transform:
+
+            rotate(0deg)
+
+            translateX(180px)
+
+            rotate(0deg);
+
+    }
+
+    100%{
+
+        transform:
+
+            rotate(360deg)
+
+            translateX(180px)
+
+            rotate(-360deg);
+
+    }
+
+}
+
+@keyframes pulseGlow{
+
+    0%,100%{
+
+        opacity:.5;
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        opacity:1;
+
+        transform:scale(1.08);
+
+    }
+
+}
+
+/* ==========================================================
+   SCROLL INDICATOR
+========================================================== */
+
+.scroll-indicator{
+
+    position:absolute;
+
+    bottom:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+}
+
+.scroll-indicator span{
+
+    display:block;
+
+    width:28px;
+
+    height:48px;
+
+    border:2px solid white;
+
+    border-radius:25px;
+
+    position:relative;
+
+}
+
+.scroll-indicator span::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:6px;
+
+    height:10px;
+
+    background:white;
+
+    border-radius:20px;
+
+    left:50%;
+
+    top:8px;
+
+    transform:translateX(-50%);
+
+    animation:scrollMouse 2s infinite;
+
+}
+
+@keyframes scrollMouse{
+
+    from{
+
+        top:8px;
+
+        opacity:1;
+
+    }
+
+    to{
+
+        top:28px;
+
+        opacity:0;
+
+    }
+
+}
+
+/* ==========================================================
+   FLOATING PARTICLES
+========================================================== */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+
+        radial-gradient(circle,rgba(255,255,255,.5) 1px,transparent 1px);
+
+    background-size:160px 160px;
+
+    opacity:.08;
+
+    animation:particlesMove 80s linear infinite;
+
+    z-index:-5;
+
+}
+
+@keyframes particlesMove{
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+    to{
+
+        transform:translateY(1000px);
+
+    }
+
+}
+/* ==========================================================
+   PART 3
+   ABOUT • FEATURES • AI WORKFLOW • STATISTICS
+==========================================================*/
+
+/* ==============================
+   SECTION DEFAULT
+============================== */
+
+section{
+
+    padding:120px 8%;
+    position:relative;
+
+}
+
+section h2{
+
+    font-size:48px;
+    text-align:center;
+    color:var(--primary);
+    margin-bottom:25px;
+
+    text-shadow:
+        0 0 15px rgba(0,217,255,.4);
+
+}
+
+section p{
+
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    line-height:1.9;
+    color:#d8d8d8;
+
+}
+
+/* ==============================
+   ABOUT
+============================== */
+
+#about{
+
+    position:relative;
+
+}
+
+#about::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+    height:420px;
+
+    background:
+    radial-gradient(circle,
+    rgba(0,217,255,.12),
+    transparent);
+
+    left:-180px;
+    top:20%;
+
+    filter:blur(35px);
+
+}
+
+#about p{
+
+    margin-top:35px;
+
+    font-size:18px;
+
+}
+
+/* ==============================
+   FEATURE GRID
+============================== */
+
+.feature-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
+
+    gap:35px;
+
+    margin-top:70px;
+
+}
+
+.card{
+
+    position:relative;
+
+    padding:35px;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.4s;
+
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:160%;
+    height:160%;
+
+    background:
+    linear-gradient(
+    45deg,
+    transparent,
+    rgba(0,217,255,.15),
+    transparent);
+
+    left:-140%;
+    top:-140%;
+
+    transition:.7s;
+
+}
+
+.card:hover::before{
+
+    left:100%;
+    top:100%;
+
+}
+
+.card:hover{
+
+    transform:
+        translateY(-12px);
+
+    box-shadow:
+        0 0 40px rgba(0,217,255,.3);
+
+}
+
+.card h3{
+
+    color:var(--primary);
+
+    margin-bottom:18px;
+
+    font-size:24px;
+
+}
+
+.card p{
+
+    font-size:16px;
+
+    color:#d5d5d5;
+
+}
+
+/* ==============================
+   WORKFLOW
+============================== */
+
+.timeline{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:25px;
+
+    margin-top:70px;
+
+}
+
+.timeline div{
+
+    position:relative;
+
+    padding:18px 28px;
+
+    border-radius:50px;
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.timeline div:hover{
+
+    background:rgba(0,217,255,.18);
+
+    transform:translateY(-6px);
+
+    box-shadow:
+        0 0 30px rgba(0,217,255,.25);
+
+}
+
+.timeline div::after{
+
+    content:"➜";
+
+    position:absolute;
+
+    right:-22px;
+
+    color:var(--primary);
+
+}
+
+.timeline div:last-child::after{
+
+    display:none;
+
+}
+
+/* ==============================
+   STATISTICS
+============================== */
+
+.statistics{
+
+    margin-top:90px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:30px;
+
+}
+
+.stat-card{
+
+    text-align:center;
+
+    padding:35px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:
+        0 0 35px rgba(0,217,255,.3);
+
+}
+
+.stat-card h1{
+
+    font-size:55px;
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+}
+
+.stat-card p{
+
+    color:#d7d7d7;
+
+}
+
+/* ==============================
+   SECTION DIVIDER
+============================== */
+
+.wave{
+
+    position:absolute;
+
+    bottom:-2px;
+
+    left:0;
+
+    width:100%;
+
+    overflow:hidden;
+
+    line-height:0;
+
+}
+
+.wave svg{
+
+    display:block;
+
+    width:100%;
+
+    height:90px;
+
+}
+
+.wave path{
+
+    fill:#020611;
+
+}
+/* ==========================================================
+   PART 4
+   FOOTER • DASHBOARD • PREMIUM EFFECTS • RESPONSIVE
+==========================================================*/
+
+/* ==============================
+   DASHBOARD PREVIEW
+============================== */
+
+#dashboard{
+
+    padding:120px 8%;
+    text-align:center;
+    position:relative;
+
+}
+
+#dashboard h2{
+
+    font-size:48px;
+    color:var(--primary);
+    margin-bottom:20px;
+
+}
+
+#dashboard p{
+
+    max-width:800px;
+    margin:auto;
+    color:#d8d8d8;
+    line-height:1.8;
+    margin-bottom:60px;
+
+}
+
+.dashboard-preview{
+
+    width:100%;
+    max-width:1100px;
+
+    margin:auto;
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+        0 0 45px rgba(0,217,255,.15);
+
+}
+
+.dashboard-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:20px 35px;
+
+    background:rgba(255,255,255,.04);
+
+}
+
+.dashboard-body{
+
+    padding:40px;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+}
+
+.dashboard-card{
+
+    background:rgba(255,255,255,.05);
+
+    border-radius:18px;
+
+    padding:30px;
+
+    transition:.35s;
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+
+        0 0 35px rgba(0,217,255,.25);
+
+}
+
+.dashboard-card h3{
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}
+
+/* ==============================
+   FOOTER
+============================== */
+
+footer{
+
+    padding:70px 8%;
+
+    text-align:center;
+
+    background:#01030a;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+footer p{
+
+    color:#9c9c9c;
+
+    margin-top:12px;
+
+}
+
+footer a{
+
+    color:var(--primary);
+
+    text-decoration:none;
+
+}
+
+footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ==============================
+   PREMIUM GLOW
+============================== */
+
+.glow{
+
+    position:absolute;
+
+    width:450px;
+
+    height:450px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(circle,
+
+    rgba(0,217,255,.18),
+
+    transparent 70%);
+
+    filter:blur(40px);
+
+    z-index:-1;
+
+}
+
+.glow.left{
+
+    top:10%;
+
+    left:-180px;
+
+}
+
+.glow.right{
+
+    bottom:5%;
+
+    right:-180px;
+
+}
+
+/* ==============================
+   GLASS EFFECT
+============================== */
+
+.glass{
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+/* ==============================
+   HOVER EFFECTS
+============================== */
+
+.card,
+.dashboard-card,
+.primary-btn,
+.secondary-btn{
+
+    transition:all .35s ease;
+
+}
+
+.card:hover{
+
+    transform:
+
+        translateY(-10px)
+
+        scale(1.03);
+
+}
+
+.primary-btn:hover{
+
+    box-shadow:
+
+        0 0 55px rgba(0,217,255,.65);
+
+}
+
+.secondary-btn:hover{
+
+    box-shadow:
+
+        0 0 30px rgba(0,217,255,.25);
+
+}
+
+/* ==============================
+   SECTION ANIMATION
+============================== */
+
+.hidden{
+
+    opacity:0;
+
+    transform:translateY(70px);
+
+    transition:1s;
+
+}
+
+.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media(max-width:1100px){
+
+.hero-left h1{
+
+    font-size:62px;
+
+}
+
+.hero-left h2{
+
+    font-size:24px;
+
+}
+
+}
+
+@media(max-width:900px){
+
+nav{
+
+    flex-direction:column;
+
+    gap:20px;
+
+    border-radius:20px;
+
+    padding:18px;
+
+}
+
+nav ul{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+#hero{
+
+    flex-direction:column-reverse;
+
+    text-align:center;
+
+    padding-top:180px;
+
+}
+
+.hero-left{
+
+    width:100%;
+
+}
+
+.hero-right{
+
+    width:100%;
+
+    margin-bottom:50px;
+
+}
+
+.hero-buttons{
+
+    justify-content:center;
+
+}
+
+.earth{
+
+    width:280px;
+
+}
+
+.satellite{
+
+    width:100px;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.hero-left h1{
+
+    font-size:44px;
+
+}
+
+.hero-left h2{
+
+    font-size:20px;
+
+}
+
+.hero-left p{
+
+    font-size:16px;
+
+}
+
+section{
+
+    padding:90px 25px;
+
+}
+
+.dashboard-body{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+/* ==============================
+   END
+============================== */

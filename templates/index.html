@@ -1,11 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>DeepSpace CyberShield AI</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="icon"
+        href="{{ url_for('static', filename='images/logo.png') }}">
+
 </head>
+
 <body>
-    <h1>🚀 DeepSpace CyberShield AI</h1>
-    <h2>Cybersecurity Dashboard</h2>
-    <p>The website is working successfully!</p>
+
+    <!-- ================= LOADING SCREEN ================= -->
+
+    <div id="loader">
+
+        <div class="loader-box">
+
+            <h1>🚀 DeepSpace CyberShield AI</h1>
+
+            <p id="loading-text">
+
+                Initializing AI Engine...
+
+            </p>
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= BACKGROUND ================= -->
+
+    <div class="stars"></div>
+
+    <div class="twinkling"></div>
+
+    <div class="nebula"></div>
+
+    <div class="shooting-stars"></div>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo">
+
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+
+            <span>
+
+                DeepSpace CyberShield AI
+
+            </span>
+
+        </div>
+
+        <ul>
+
+            <li><a href="#hero">Home</a></li>
+
+            <li><a href="#about">About</a></li>
+
+            <li><a href="#features">Features</a></li>
+
+            <li><a href="#workflow">Workflow</a></li>
+
+            <li><a href="#dashboard">Dashboard</a></li>
+
+        </ul>
+
+    </nav>
+
+    <!-- ================= HERO ================= -->
+
+    <section id="hero">
+
+    <div class="hero-left">
+
+        <h1>
+            DeepSpace <span>CyberShield AI</span>
+        </h1>
+
+        <h2>
+            Autonomous Deep Space Communication Security Platform
+        </h2>
+
+        <p>
+            Secure deep-space communications using Artificial Intelligence,
+            Isolation Forest, TTL Evidence, Dynamic Trust Evaluation,
+            and Dynamic Signal Lineage Verification (DSSLV).
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/dashboard" class="primary-btn">
+                🚀 Launch Mission Control
+            </a>
+
+            <a href="#about" class="secondary-btn">
+                Learn More
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-right">
+
+        <img
+            class="deep-defense"
+            src="{{ url_for('static', filename='images/deep-space-defense.png') }}"
+            alt="Deep Space Defense AI">
+
+        <img
+            class="earth"
+            src="{{ url_for('static', filename='images/earth.png') }}"
+            alt="Earth">
+
+        <img
+            class="satellite"
+            src="{{ url_for('static', filename='images/satellite.png') }}"
+            alt="Satellite">
+
+    </div>
+
+</section>
+
+    <!-- ================= SCROLL INDICATOR ================= -->
+
+    <div class="scroll-indicator">
+
+        <span></span>
+
+    </div>
+
+    <!-- ================= ABOUT ================= -->
+
+    <section id="about">
+
+        <h2>
+
+            Our Mission
+
+        </h2>
+
+        <p>
+
+            DeepSpace CyberShield AI protects interplanetary communication
+            systems against spoofing, replay attacks, injection attacks,
+            and unknown cyber anomalies using machine learning and intelligent
+            trust evaluation.
+
+        </p>
+
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+
+    <section id="features">
+
+        <h2>
+
+            Core Features
+
+        </h2>
+
+        <div class="feature-grid">
+
+            <div class="card">
+
+                <h3>🛰 TTL Evidence</h3>
+
+                <p>
+
+                    Monitors packet lifespan to detect suspicious transmissions.
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>🔒 Dynamic Trust</h3>
+
+                <p>
+
+                    Continuously calculates communication trust scores.
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>📡 DSSLV</h3>
+
+                <p>
+
+                    Verifies communication lineage across relay satellites.
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>🤖 Isolation Forest AI</h3>
+
+                <p>
+
+                    Detects previously unseen anomalies automatically.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= WORKFLOW ================= -->
+
+    <section id="workflow">
+
+        <h2>
+
+            AI Detection Workflow
+
+        </h2>
+
+        <div class="timeline">
+
+            <div>Communication Logs</div>
+
+            <div>TTL Analysis</div>
+
+            <div>DSSLV</div>
+
+            <div>Trust Evaluation</div>
+
+            <div>Isolation Forest</div>
+
+            <div>Threat Detection</div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section id="dashboard">
+
+        <h2>
+
+            Mission Control Dashboard
+
+        </h2>
+
+        <p>
+
+            Monitor AI predictions, threat alerts, communication logs,
+            trust scores, and mission health in real time.
+
+        </p>
+
+        <a href="/dashboard" class="primary-btn">
+
+            Open Dashboard
+
+        </a>
+
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+
+            © 2026 DeepSpace CyberShield AI
+
+        </p>
+
+        <p>
+
+            Powered by Flask • Python • Isolation Forest • HTML • CSS • JavaScript
+
+        </p>
+
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="{{ url_for('static', filename='js/intro.js') }}"></script>
+
 </body>
+
 </html>
