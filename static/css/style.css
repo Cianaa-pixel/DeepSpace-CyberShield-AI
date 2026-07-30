@@ -698,6 +698,46 @@ nav ul li a:hover::after{
     animation:pulseGlow 5s infinite;
 
 }
+/* ==============================
+   DEEP SPACE DEFENSE IMAGE
+============================== */
+
+.deep-defense{
+
+    position:absolute;
+
+    width:420px;
+
+    right:-80px;
+
+    bottom:-30px;
+
+    z-index:3;
+
+    filter:
+    drop-shadow(0 0 35px rgba(0,217,255,.5));
+
+    animation:
+    floatDefense 6s ease-in-out infinite;
+
+}
+
+
+@keyframes floatDefense{
+
+    0%,100%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-20px);
+
+    }
+
+}
 
 /* ---------------- EARTH ---------------- */
 
@@ -1684,7 +1724,72 @@ section{
 }
 
 }
-
 /* ==============================
-   END
+   ABOUT IMAGE
 ============================== */
+
+.about-image{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:50px;
+
+}
+
+
+.about-image img{
+
+    width:420px;
+
+    border-radius:25px;
+
+    filter:
+    drop-shadow(0 0 35px rgba(0,217,255,.4));
+
+    transition:.5s;
+
+}
+
+
+.about-image img:hover{
+
+    transform:scale(1.05);
+
+}
+/* ==============================
+   AI WORKFLOW IMAGE
+============================== */
+
+
+.ai-image{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:50px;
+
+}
+
+
+.ai-image img{
+
+    width:500px;
+
+    border-radius:25px;
+
+    filter:
+    drop-shadow(0 0 40px rgba(111,92,255,.5));
+
+    transition:.5s;
+
+}
+
+
+.ai-image img:hover{
+
+    transform:translateY(-10px);
+
+}
