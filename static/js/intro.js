@@ -1,197 +1,536 @@
-// ==============================
-// DeepSpace CyberShield AI
-// intro.js
-// ==============================
+/* ==========================================================
+   DeepSpace CyberShield AI
+   intro.js
+   Premium Intro + Scroll Animations + UI Effects
+========================================================== */
 
-// Wait until page loads
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ======================================================
+       ELEMENTS
+    ====================================================== */
 
     const loader = document.getElementById("loader");
+    const loaderBox = document.querySelector(".loader-box");
+    const loaderTitle = document.querySelector(".loader-box h1");
+    const navbar = document.querySelector("nav");
 
-    // Hide loading screen after 3 seconds
-    setTimeout(() => {
+    const hero = document.querySelector("#hero");
+    const heroLeft = document.querySelector(".hero-left");
+    const heroRight = document.querySelector(".hero-right");
 
-        if (loader) {
 
-            loader.style.opacity = "0";
+    /* ======================================================
+       PREVENT FLASH
+    ====================================================== */
 
-            loader.style.visibility = "hidden";
+    if (navbar) {
+        navbar.style.opacity = "0";
+        navbar.style.transform = "translateX(-50%) translateY(-30px)";
+    }
+
+    if (heroLeft) {
+        heroLeft.style.opacity = "0";
+        heroLeft.style.transform = "translateY(40px)";
+    }
+
+    if (heroRight) {
+        heroRight.style.opacity = "0";
+        heroRight.style.transform = "translateY(40px)";
+    }
+
+
+    /* ======================================================
+       REMOVE OLD LOADING BAR
+    ====================================================== */
+
+    const progress = document.querySelector(".progress");
+
+    if (progress) {
+        progress.style.display = "none";
+    }
+
+    const loadingText = document.querySelector("#loading-text");
+
+    if (loadingText) {
+        loadingText.style.display = "none";
+    }
+
+
+    /* ======================================================
+       INTRO TITLE
+    ====================================================== */
+
+    if (loaderTitle) {
+
+        const originalText =
+            "DeepSpace CyberShield AI";
+
+        loaderTitle.textContent = "";
+
+        loaderTitle.style.opacity = "1";
+
+        loaderTitle.style.transform = "scale(1)";
+
+        loaderTitle.style.transition =
+            "opacity 1s ease, transform 1s ease";
+
+        let index = 0;
+
+
+        /* -----------------------------------------------
+           TYPE LETTER BY LETTER
+        ----------------------------------------------- */
+
+        function typeTitle() {
+
+            if (index < originalText.length) {
+
+                loaderTitle.textContent +=
+                    originalText[index];
+
+                index++;
+
+                setTimeout(typeTitle, 75);
+
+            } else {
+
+                /* After typing finishes */
+
+                setTimeout(() => {
+
+                    fadeIntro();
+
+                }, 1000);
+
+            }
 
         }
 
-    }, 3000);
 
-});
+        /* =================================================
+           FADE INTRO
+        ================================================= */
 
-// ==============================
-// Loading Messages
-// ==============================
+        function fadeIntro() {
 
-const loadingMessages = [
+            loaderTitle.style.opacity = "0";
 
-    "Initializing AI Engine...",
-    "Loading Isolation Forest...",
-    "Loading TTL Evidence...",
-    "Loading Dynamic Trust...",
-    "Loading DSSLV...",
-    "Launching Mission Control..."
+            loaderTitle.style.transform =
+                "scale(1.15)";
 
-];
+            if (loaderBox) {
 
-let messageIndex = 0;
+                loaderBox.style.transition =
+                    "opacity 1s ease, transform 1s ease";
 
-const loadingText = document.getElementById("loading-text");
+                loaderBox.style.opacity = "0";
 
-if (loadingText) {
+                loaderBox.style.transform =
+                    "scale(1.08)";
 
-    setInterval(() => {
+            }
 
-        messageIndex++;
 
-        if (messageIndex >= loadingMessages.length) {
+            setTimeout(() => {
 
-            messageIndex = 0;
+                if (loader) {
 
-        }
+                    loader.style.opacity = "0";
 
-        loadingText.innerHTML = loadingMessages[messageIndex];
+                    loader.style.pointerEvents =
+                        "none";
 
-    }, 500);
+                    loader.style.transition =
+                        "opacity 1s ease";
 
-}
+                }
 
-// ==============================
-// Smooth Scroll
-// ==============================
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                /* -----------------------------------------
+                   SHOW WEBSITE
+                ----------------------------------------- */
 
-    anchor.addEventListener("click", function (e) {
+                setTimeout(() => {
 
-        e.preventDefault();
+                    if (loader) {
+                        loader.style.display = "none";
+                    }
 
-        const target = document.querySelector(this.getAttribute("href"));
+                    showWebsite();
 
-        if (target) {
+                }, 700);
 
-            target.scrollIntoView({
-
-                behavior: "smooth"
-
-            });
+            }, 700);
 
         }
 
-    });
 
-});
+        /* =================================================
+           START INTRO
+        ================================================= */
 
-// ==============================
-// Navbar Background on Scroll
-// ==============================
+        setTimeout(() => {
 
-window.addEventListener("scroll", () => {
+            typeTitle();
 
-    const nav = document.querySelector("nav");
+        }, 400);
 
-    if (!nav) return;
+    } else {
 
-    if (window.scrollY > 60) {
-
-        nav.classList.add("nav-scroll");
+        showWebsite();
 
     }
 
-    else {
 
-        nav.classList.remove("nav-scroll");
+    /* ======================================================
+       SHOW MAIN WEBSITE
+    ====================================================== */
+
+    function showWebsite() {
+
+        /* -----------------------------------------------
+           NAVBAR POP
+        ----------------------------------------------- */
+
+        if (navbar) {
+
+            navbar.style.transition =
+                "opacity .8s ease, transform .8s cubic-bezier(.17,.67,.3,1.3)";
+
+            navbar.style.opacity = "1";
+
+            navbar.style.transform =
+                "translateX(-50%) translateY(0)";
+
+        }
+
+
+        /* -----------------------------------------------
+           HERO LEFT
+        ----------------------------------------------- */
+
+        setTimeout(() => {
+
+            if (heroLeft) {
+
+                heroLeft.style.transition =
+                    "opacity 1s ease, transform 1s ease";
+
+                heroLeft.style.opacity = "1";
+
+                heroLeft.style.transform =
+                    "translateY(0)";
+
+            }
+
+        }, 250);
+
+
+        /* -----------------------------------------------
+           HERO RIGHT
+        ----------------------------------------------- */
+
+        setTimeout(() => {
+
+            if (heroRight) {
+
+                heroRight.style.transition =
+                    "opacity 1.2s ease, transform 1.2s ease";
+
+                heroRight.style.opacity = "1";
+
+                heroRight.style.transform =
+                    "translateY(0)";
+
+            }
+
+        }, 500);
+
+
+        /* -----------------------------------------------
+           INITIAL SECTION ANIMATION
+        ----------------------------------------------- */
+
+        initializeScrollAnimations();
 
     }
 
-});
 
-// ==============================
-// Scroll Reveal Animation
-// ==============================
+    /* ======================================================
+       NAVBAR SCROLL EFFECT
+    ====================================================== */
 
-const observer = new IntersectionObserver(entries => {
+    window.addEventListener("scroll", () => {
 
-    entries.forEach(entry => {
+        if (!navbar) return;
 
-        if (entry.isIntersecting) {
+        if (window.scrollY > 50) {
 
-            entry.target.classList.add("show");
+            navbar.classList.add("nav-scroll");
+
+        } else {
+
+            navbar.classList.remove("nav-scroll");
 
         }
 
     });
 
-}, {
 
-    threshold: 0.2
+    /* ======================================================
+       SCROLL REVEAL
+    ====================================================== */
 
-});
+    function initializeScrollAnimations() {
 
-document.querySelectorAll("section").forEach(section => {
+        const animatedElements =
+            document.querySelectorAll(
+                "section, .card, .timeline div, .stat-card, .dashboard-card"
+            );
 
-    section.classList.add("hidden");
 
-    observer.observe(section);
+        animatedElements.forEach(element => {
 
-});
+            element.classList.add("hidden");
 
-// ==============================
-// Hero Button Animation
-// ==============================
+        });
 
-const heroButton = document.querySelector(".primary-btn");
 
-if (heroButton) {
+        const observer =
+            new IntersectionObserver(
 
-    heroButton.addEventListener("mouseenter", () => {
+                entries => {
 
-        heroButton.style.transform = "scale(1.05)";
+                    entries.forEach(entry => {
 
-    });
+                        if (entry.isIntersecting) {
 
-    heroButton.addEventListener("mouseleave", () => {
+                            entry.target.classList.add("show");
 
-        heroButton.style.transform = "scale(1)";
+                            observer.unobserve(
+                                entry.target
+                            );
 
-    });
+                        }
 
-}
+                    });
 
-// ==============================
-// Typing Effect
-// ==============================
+                },
 
-const heroTitle = document.querySelector(".hero-left h1");
+                {
+                    threshold: 0.15
+                }
 
-if (heroTitle) {
+            );
 
-    const text = heroTitle.textContent;
 
-    heroTitle.textContent = "";
+        animatedElements.forEach(element => {
 
-    let i = 0;
+            observer.observe(element);
 
-    function typeWriter() {
-
-        if (i < text.length) {
-
-            heroTitle.textContent += text.charAt(i);
-
-            i++;
-
-            setTimeout(typeWriter, 40);
-
-        }
+        });
 
     }
 
-    typeWriter();
 
-}
+    /* ======================================================
+       BUTTON RIPPLE EFFECT
+    ====================================================== */
 
-console.log("🚀 DeepSpace CyberShield AI Loaded Successfully");
+    const buttons =
+        document.querySelectorAll(
+            ".primary-btn, .secondary-btn"
+        );
+
+
+    buttons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function(event) {
+
+                const ripple =
+                    document.createElement("span");
+
+                ripple.classList.add(
+                    "button-ripple"
+                );
+
+                const rect =
+                    this.getBoundingClientRect();
+
+                const size =
+                    Math.max(
+                        rect.width,
+                        rect.height
+                    );
+
+                ripple.style.width =
+                    size + "px";
+
+                ripple.style.height =
+                    size + "px";
+
+                ripple.style.left =
+                    (event.clientX - rect.left - size / 2)
+                    + "px";
+
+                ripple.style.top =
+                    (event.clientY - rect.top - size / 2)
+                    + "px";
+
+                this.appendChild(ripple);
+
+
+                setTimeout(() => {
+
+                    ripple.remove();
+
+                }, 600);
+
+            }
+
+        );
+
+    });
+
+
+    /* ======================================================
+       CARD MOUSE GLOW
+    ====================================================== */
+
+    const cards =
+        document.querySelectorAll(
+            ".card, .dashboard-card, .stat-card"
+        );
+
+
+    cards.forEach(card => {
+
+        card.addEventListener(
+            "mousemove",
+            event => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    event.clientX - rect.left;
+
+                const y =
+                    event.clientY - rect.top;
+
+
+                card.style.setProperty(
+                    "--mouse-x",
+                    `${x}px`
+                );
+
+                card.style.setProperty(
+                    "--mouse-y",
+                    `${y}px`
+                );
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            () => {
+
+                card.style.removeProperty(
+                    "--mouse-x"
+                );
+
+                card.style.removeProperty(
+                    "--mouse-y"
+                );
+
+            }
+        );
+
+    });
+
+
+    /* ======================================================
+       SMOOTH NAVIGATION
+    ====================================================== */
+
+    document.querySelectorAll(
+        'nav a[href^="#"]'
+    ).forEach(link => {
+
+        link.addEventListener(
+            "click",
+            event => {
+
+                const targetId =
+                    link.getAttribute("href");
+
+                const target =
+                    document.querySelector(targetId);
+
+                if (!target) return;
+
+                event.preventDefault();
+
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    });
+
+
+    /* ======================================================
+       PARALLAX HERO
+    ====================================================== */
+
+    window.addEventListener(
+        "mousemove",
+        event => {
+
+            if (!heroRight) return;
+
+            const x =
+                (event.clientX / window.innerWidth - 0.5);
+
+            const y =
+                (event.clientY / window.innerHeight - 0.5);
+
+
+            heroRight.style.setProperty(
+                "--mouse-x",
+                `${x * 15}px`
+            );
+
+            heroRight.style.setProperty(
+                "--mouse-y",
+                `${y * 15}px`
+            );
+
+        }
+    );
+
+
+    /* ======================================================
+       CONSOLE MESSAGE
+    ====================================================== */
+
+    console.log(
+        "%c🚀 DeepSpace CyberShield AI",
+        "color:#00d9ff;font-size:20px;font-weight:bold;"
+    );
+
+    console.log(
+        "%cAI Defense System Online",
+        "color:#00ffb3;font-size:14px;"
+    );
+
+});

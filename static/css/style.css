@@ -1,26 +1,68 @@
 /* ==========================================================
-   DeepSpace CyberShield AI
-   Version 2.0 - Part 1
-   Global + Galaxy + Loader + Navbar
+   DEEPSPACE CYBERSHIELD AI
+   VERSION 2.0
+   FUTURISTIC SPACE CYBERSECURITY INTERFACE
 ========================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ==========================================================
+   GOOGLE FONT
+========================================================== */
+
+@import url(
+    'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap'
+);
+
+
+/* ==========================================================
+   ROOT VARIABLES
+========================================================== */
 
 :root{
 
     --primary:#00d9ff;
+    --primary-light:#72f3ff;
+
     --secondary:#6f5cff;
+    --purple:#8b5cf6;
+
+    --green:#00ffb3;
+
     --dark:#020611;
-    --glass:rgba(255,255,255,.08);
-    --border:rgba(255,255,255,.12);
+    --dark2:#01030a;
+    --dark3:#050b18;
+
+    --white:#ffffff;
+
+    --text:#d8e9f2;
+    --muted:#8da5b5;
+
+    --glass:rgba(255,255,255,.055);
+
+    --border:rgba(255,255,255,.10);
+
+    --cyan-glow:
+        rgba(0,217,255,.45);
+
+    --purple-glow:
+        rgba(111,92,255,.35);
 
 }
+
+
+/* ==========================================================
+   GLOBAL RESET
+========================================================== */
 
 *{
+
     margin:0;
     padding:0;
+
     box-sizing:border-box;
+
 }
+
 
 html{
 
@@ -28,23 +70,52 @@ html{
 
 }
 
+
 body{
 
     font-family:'Poppins',sans-serif;
-    background:#020611;
-    color:white;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 0%,
+            #07152c,
+            #020611 45%,
+            #01030a 100%
+        );
+
+    color:var(--white);
+
     overflow-x:hidden;
+
+    min-height:100vh;
+
 }
 
-/* =========================================
+
+/* ==========================================================
+   SELECTION
+========================================================== */
+
+::selection{
+
+    background:var(--primary);
+
+    color:#001018;
+
+}
+
+
+/* ==========================================================
    SCROLLBAR
-========================================= */
+========================================================== */
 
 ::-webkit-scrollbar{
 
-    width:10px;
+    width:9px;
 
 }
+
 
 ::-webkit-scrollbar-track{
 
@@ -52,17 +123,36 @@ body{
 
 }
 
+
 ::-webkit-scrollbar-thumb{
 
-    background:linear-gradient(var(--primary),#009dff);
+    background:
+
+        linear-gradient(
+            var(--primary),
+            var(--secondary)
+        );
 
     border-radius:20px;
 
 }
 
-/* =========================================
-   GALAXY BACKGROUND
-========================================= */
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:
+
+        linear-gradient(
+            var(--primary-light),
+            #8b7cff
+        );
+
+}
+
+
+/* ==========================================================
+   GLOBAL SPACE BACKGROUND
+========================================================== */
 
 .stars,
 .twinkling,
@@ -70,91 +160,132 @@ body{
 .shooting-stars{
 
     position:fixed;
+
     inset:0;
-    z-index:-10;
+
+    pointer-events:none;
 
 }
 
-/* Star Layer 1 */
+
+/* ==========================================================
+   STAR LAYER
+========================================================== */
 
 .stars{
 
+    z-index:-20;
+
     background-image:
 
-        radial-gradient(circle,#ffffff 1px,transparent 1px),
-        radial-gradient(circle,#9fe8ff 1px,transparent 1px);
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.95) 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(159,232,255,.8) 1px,
+            transparent 1px
+        );
 
     background-size:
 
         70px 70px,
-        120px 120px;
+        130px 130px;
 
     background-position:
 
         0 0,
-        60px 60px;
+        50px 80px;
 
     animation:
 
-        starsMove 140s linear infinite;
+        starsMove 150s linear infinite;
 
 }
 
-/* Star Layer 2 */
+
+/* ==========================================================
+   TWINKLING STARS
+========================================================== */
 
 .twinkling{
 
+    z-index:-19;
+
     background-image:
 
-        radial-gradient(circle,#fff 1px,transparent 1px);
+        radial-gradient(
+            circle,
+            #ffffff 1px,
+            transparent 1px
+        );
 
-    background-size:150px 150px;
+    background-size:170px 170px;
 
-    opacity:.35;
+    opacity:.25;
 
     animation:
 
         twinkle 4s ease-in-out infinite alternate,
 
-        starsMove2 220s linear infinite;
+        starsMove2 210s linear infinite;
 
 }
 
-/* Nebula */
+
+/* ==========================================================
+   NEBULA
+========================================================== */
 
 .nebula{
 
+    z-index:-18;
+
     background:
 
-    radial-gradient(circle at 20% 20%,
-    rgba(0,174,255,.18),
-    transparent 35%),
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(0,174,255,.20),
+            transparent 34%
+        ),
 
-    radial-gradient(circle at 80% 60%,
-    rgba(93,0,255,.20),
-    transparent 45%),
+        radial-gradient(
+            circle at 85% 35%,
+            rgba(111,92,255,.20),
+            transparent 38%
+        ),
 
-    radial-gradient(circle at center,
-    rgba(0,255,255,.06),
-    transparent 60%);
+        radial-gradient(
+            circle at 50% 80%,
+            rgba(0,255,179,.07),
+            transparent 40%
+        );
 
-    filter:blur(20px);
+    filter:blur(35px);
+
+    animation:
+
+        nebulaMove 20s ease-in-out infinite alternate;
 
 }
 
-/* =========================================
+
+/* ==========================================================
    STAR ANIMATIONS
-========================================= */
+========================================================== */
 
 @keyframes starsMove{
 
-    from{
+    0%{
 
         transform:translateY(0);
 
     }
 
-    to{
+    100%{
 
         transform:translateY(1000px);
 
@@ -162,15 +293,16 @@ body{
 
 }
 
+
 @keyframes starsMove2{
 
-    from{
+    0%{
 
         transform:translateX(0);
 
     }
 
-    to{
+    100%{
 
         transform:translateX(-800px);
 
@@ -178,25 +310,50 @@ body{
 
 }
 
+
 @keyframes twinkle{
 
-    from{
+    0%{
 
-        opacity:.2;
+        opacity:.15;
 
     }
 
-    to{
+    50%{
 
-        opacity:.6;
+        opacity:.35;
+
+    }
+
+    100%{
+
+        opacity:.65;
 
     }
 
 }
 
-/* =========================================
+
+@keyframes nebulaMove{
+
+    0%{
+
+        transform:scale(1) translate(0,0);
+
+    }
+
+    100%{
+
+        transform:scale(1.12) translate(30px,-20px);
+
+    }
+
+}
+
+
+/* ==========================================================
    SHOOTING STARS
-========================================= */
+========================================================== */
 
 .shooting-stars::before,
 .shooting-stars::after{
@@ -206,55 +363,74 @@ body{
     position:absolute;
 
     width:3px;
-    height:180px;
+
+    height:170px;
 
     background:
 
-    linear-gradient(
-
-    rgba(255,255,255,1),
-
-    rgba(0,217,255,.2),
-
-    transparent);
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,1),
+            rgba(0,217,255,.6),
+            transparent
+        );
 
     transform:rotate(45deg);
 
+    filter:
+
+        drop-shadow(
+            0 0 8px var(--primary)
+        );
+
     animation:
 
-    shooting 8s linear infinite;
+        shootingStar 7s linear infinite;
 
 }
+
 
 .shooting-stars::after{
 
-    animation-delay:4s;
-
-    left:75%;
+    animation-delay:3.5s;
 
 }
 
-@keyframes shooting{
 
-    from{
+@keyframes shootingStar{
+
+    0%{
 
         left:-15%;
+
         top:-15%;
+
+        opacity:0;
 
     }
 
-    to{
+    10%{
+
+        opacity:1;
+
+    }
+
+    100%{
 
         left:120%;
+
         top:120%;
+
+        opacity:0;
 
     }
 
 }
 
-/* =========================================
-   LOADER
-========================================= */
+
+/* ==========================================================
+   INTRO SCREEN
+========================================================== */
 
 #loader{
 
@@ -262,418 +438,35 @@ body{
 
     inset:0;
 
-    background:
-
-    radial-gradient(circle,#071a3b,#01040b);
-
     display:flex;
 
     justify-content:center;
 
     align-items:center;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            #071a3b 0%,
+            #020611 45%,
+            #01030a 100%
+        );
 
     z-index:99999;
 
-    transition:.8s;
+    transition:
+
+        opacity 1s ease,
+
+        visibility 1s ease;
 
 }
 
-.loader-box{
 
-    text-align:center;
+/* Intro decorative glow */
 
-}
-
-.loader-box h1{
-
-    color:var(--primary);
-
-    font-size:40px;
-
-    margin-bottom:20px;
-
-    text-shadow:
-
-    0 0 20px var(--primary);
-
-}
-
-#loading-text{
-
-    margin-bottom:25px;
-
-    letter-spacing:1px;
-
-}
-
-.progress{
-
-    width:350px;
-
-    height:12px;
-
-    background:#111827;
-
-    border-radius:50px;
-
-    overflow:hidden;
-
-}
-
-.progress-bar{
-
-    height:100%;
-
-    width:0;
-
-    border-radius:50px;
-
-    background:
-
-    linear-gradient(
-
-    90deg,
-
-    var(--primary),
-
-    #00ffb3);
-
-    animation:
-
-    loadingBar 4s forwards;
-
-}
-
-@keyframes loadingBar{
-
-    to{
-
-        width:100%;
-
-    }
-
-}
-
-/* =========================================
-   NAVBAR
-========================================= */
-
-nav{
-
-    position:fixed;
-
-    top:18px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:92%;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:16px 45px;
-
-    border-radius:60px;
-
-    background:rgba(7,15,32,.45);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:.4s;
-
-    z-index:500;
-
-}
-
-.nav-scroll{
-
-    background:rgba(0,0,0,.65);
-
-    box-shadow:
-
-    0 10px 40px rgba(0,217,255,.18);
-
-}
-
-.logo{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-}
-
-.logo img{
-
-    width:55px;
-
-    filter:drop-shadow(0 0 15px var(--primary));
-
-}
-
-.logo span{
-
-    font-size:22px;
-
-    font-weight:700;
-
-    color:var(--primary);
-
-}
-
-nav ul{
-
-    display:flex;
-
-    list-style:none;
-
-    gap:35px;
-
-}
-
-nav ul li a{
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:500;
-
-    position:relative;
-
-    transition:.3s;
-
-}
-
-nav ul li a::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-
-    bottom:-6px;
-
-    width:0;
-
-    height:2px;
-
-    background:var(--primary);
-
-    transition:.3s;
-
-}
-
-nav ul li a:hover{
-
-    color:var(--primary);
-
-}
-
-nav ul li a:hover::after{
-
-    width:100%;
-
-}
-/* ==========================================================
-   HERO SECTION
-========================================================== */
-
-#hero{
-
-    min-height:100vh;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:120px 8%;
-
-    position:relative;
-
-    overflow:hidden;
-
-}
-
-/* ---------------- LEFT SIDE ---------------- */
-
-.hero-left{
-
-    width:55%;
-
-    animation:heroFade 1.5s ease;
-
-}
-
-.hero-left h1{
-
-    font-size:82px;
-
-    font-weight:800;
-
-    line-height:1.05;
-
-    margin-bottom:20px;
-
-    text-shadow:
-
-        0 0 20px rgba(0,217,255,.35);
-
-}
-
-.hero-left h1 span{
-
-    color:var(--primary);
-
-    display:block;
-
-    text-shadow:
-
-        0 0 20px var(--primary),
-
-        0 0 40px var(--primary);
-
-}
-
-.hero-left h2{
-
-    font-size:28px;
-
-    color:#8fe9ff;
-
-    margin-bottom:30px;
-
-    font-weight:500;
-
-}
-
-.hero-left p{
-
-    font-size:18px;
-
-    line-height:1.9;
-
-    color:#d7d7d7;
-
-    margin-bottom:40px;
-
-    max-width:700px;
-
-}
-
-/* ---------------- BUTTONS ---------------- */
-
-.hero-buttons{
-
-    display:flex;
-
-    gap:25px;
-
-    flex-wrap:wrap;
-
-}
-
-.primary-btn{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:16px 34px;
-
-    border-radius:50px;
-
-    text-decoration:none;
-
-    color:#02111d;
-
-    background:linear-gradient(90deg,#00d9ff,#00ffb3);
-
-    font-weight:700;
-
-    transition:.35s;
-
-    box-shadow:
-
-        0 0 30px rgba(0,217,255,.45);
-
-}
-
-.primary-btn:hover{
-
-    transform:translateY(-5px) scale(1.03);
-
-    box-shadow:
-
-        0 0 45px rgba(0,217,255,.8);
-
-}
-
-.secondary-btn{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:16px 34px;
-
-    border-radius:50px;
-
-    border:2px solid var(--primary);
-
-    color:white;
-
-    text-decoration:none;
-
-    transition:.35s;
-
-    backdrop-filter:blur(10px);
-
-}
-
-.secondary-btn:hover{
-
-    background:rgba(0,217,255,.15);
-
-    transform:translateY(-5px);
-
-}
-
-/* ---------------- RIGHT SIDE ---------------- */
-
-.hero-right{
-
-    width:40%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    position:relative;
-
-}
-
-/* Earth Glow */
-
-.hero-right::before{
+#loader::before{
 
     content:"";
 
@@ -687,113 +480,1108 @@ nav ul li a:hover::after{
 
     background:
 
-        radial-gradient(circle,
+        radial-gradient(
+            circle,
+            rgba(0,217,255,.18),
+            transparent 70%
+        );
 
-        rgba(0,217,255,.35),
+    filter:blur(30px);
 
-        transparent 70%);
+    animation:
 
-    filter:blur(35px);
-
-    animation:pulseGlow 5s infinite;
+        introPulse 4s ease-in-out infinite;
 
 }
-/* ==============================
-   DEEP SPACE DEFENSE IMAGE
-============================== */
 
-.deep-defense{
+
+/* Intro stars */
+
+#loader::after{
+
+    content:"";
 
     position:absolute;
 
-    width:420px;
+    inset:0;
 
-    right:-80px;
+    background-image:
 
-    bottom:-30px;
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.7) 1px,
+            transparent 1px
+        );
 
-    z-index:3;
+    background-size:90px 90px;
 
-    filter:
-    drop-shadow(0 0 35px rgba(0,217,255,.5));
+    opacity:.15;
 
     animation:
-    floatDefense 6s ease-in-out infinite;
+
+        introStars 40s linear infinite;
 
 }
 
 
-@keyframes floatDefense{
+/* ==========================================================
+   INTRO CONTENT
+========================================================== */
 
-    0%,100%{
+.loader-box{
 
-        transform:translateY(0);
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+
+/* ==========================================================
+   INTRO LOGO
+========================================================== */
+
+.loader-box h1{
+
+    font-size:
+
+        clamp(
+            32px,
+            5vw,
+            70px
+        );
+
+    font-weight:800;
+
+    letter-spacing:3px;
+
+    color:white;
+
+    text-shadow:
+
+        0 0 10px rgba(0,217,255,.5),
+
+        0 0 30px rgba(0,217,255,.35);
+
+}
+
+
+/* Individual letters created by JS */
+
+.loader-box h1 span{
+
+    display:inline-block;
+
+    opacity:0;
+
+    transform:
+
+        translateY(25px)
+
+        scale(.8);
+
+    animation:
+
+        introLetter .55s
+
+        cubic-bezier(.2,.8,.2,1)
+
+        forwards;
+
+}
+
+
+/* Intro subtitle */
+
+#loading-text{
+
+    margin-top:25px;
+
+    color:var(--primary);
+
+    font-size:14px;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    opacity:0;
+
+    animation:
+
+        introSubtitle 1s ease forwards;
+
+    animation-delay:2.7s;
+
+}
+
+
+/* Remove old progress bar visually */
+
+.progress{
+
+    display:none;
+
+}
+
+
+.progress-bar{
+
+    display:none;
+
+}
+
+
+/* ==========================================================
+   INTRO ANIMATIONS
+========================================================== */
+
+@keyframes introLetter{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translateY(25px)
+            scale(.8);
+
+        filter:blur(8px);
 
     }
 
-    50%{
+    60%{
 
-        transform:translateY(-20px);
+        opacity:1;
+
+        transform:
+            translateY(-4px)
+            scale(1.05);
+
+        filter:blur(0);
+
+    }
+
+    100%{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
 
     }
 
 }
 
-/* ---------------- EARTH ---------------- */
 
-.earth{
-
-    width:360px;
-
-    animation:
-
-        rotateEarth 80s linear infinite,
-
-        floatEarth 6s ease-in-out infinite;
-
-    filter:
-
-        drop-shadow(0 0 40px rgba(0,217,255,.35));
-
-    z-index:5;
-
-}
-
-/* ---------------- SATELLITE ---------------- */
-
-.satellite{
-
-    position:absolute;
-
-    width:130px;
-
-    top:40px;
-
-    right:20px;
-
-    z-index:10;
-
-    animation:
-
-        orbitSatellite 10s linear infinite;
-
-    filter:
-
-        drop-shadow(0 0 15px rgba(255,255,255,.6));
-
-}
-
-/* ---------------- ANIMATIONS ---------------- */
-
-@keyframes heroFade{
+@keyframes introSubtitle{
 
     from{
 
         opacity:0;
 
-        transform:translateX(-50px);
+        transform:translateY(15px);
 
     }
+
+    to{
+
+        opacity:.8;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+@keyframes introPulse{
+
+    0%,100%{
+
+        transform:scale(1);
+
+        opacity:.4;
+
+    }
+
+    50%{
+
+        transform:scale(1.25);
+
+        opacity:.8;
+
+    }
+
+}
+
+
+@keyframes introStars{
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+    to{
+
+        transform:translateY(600px);
+
+    }
+
+}
+
+
+/* ==========================================================
+   INTRO EXIT
+========================================================== */
+
+#loader.hide{
+
+    opacity:0;
+
+    visibility:hidden;
+
+}
+
+
+/* ==========================================================
+   NAVBAR
+========================================================== */
+
+nav{
+
+    position:fixed;
+
+    top:18px;
+
+    left:50%;
+
+    transform:
+
+        translate(-50%,-30px);
+
+    width:92%;
+
+    max-width:1500px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 35px;
+
+    border-radius:60px;
+
+    background:
+
+        rgba(5,13,29,.42);
+
+    backdrop-filter:blur(20px);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+
+        0 10px 40px
+        rgba(0,0,0,.25);
+
+    opacity:0;
+
+    transition:
+
+        opacity .8s ease,
+
+        transform .8s cubic-bezier(.2,.8,.2,1),
+
+        background .4s;
+
+    z-index:500;
+
+}
+
+
+/* Navbar appears */
+
+nav.nav-visible{
+
+    opacity:1;
+
+    transform:
+
+        translate(-50%,0);
+
+}
+
+
+/* Navbar after scrolling */
+
+nav.nav-scroll{
+
+    background:
+
+        rgba(0,5,15,.78);
+
+    border-color:
+
+        rgba(0,217,255,.20);
+
+    box-shadow:
+
+        0 10px 50px
+        rgba(0,217,255,.12);
+
+}
+
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+.logo img{
+
+    width:48px;
+
+    height:48px;
+
+    object-fit:contain;
+
+    filter:
+
+        drop-shadow(
+            0 0 12px var(--primary)
+        );
+
+    animation:
+
+        logoFloat 4s ease-in-out infinite;
+
+}
+
+
+.logo span{
+
+    color:var(--primary);
+
+    font-size:20px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+
+/* ==========================================================
+   NAV LINKS
+========================================================== */
+
+nav ul{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+    list-style:none;
+
+}
+
+
+nav ul li a{
+
+    position:relative;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+
+/* Animated underline */
+
+nav ul li a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:2px;
+
+    transform:translateX(-50%);
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:
+
+        0 0 10px var(--primary);
+
+    transition:.35s;
+
+}
+
+
+nav ul li a:hover{
+
+    color:var(--primary);
+
+    text-shadow:
+
+        0 0 10px var(--primary);
+
+}
+
+
+nav ul li a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* ==========================================================
+   HERO
+========================================================== */
+
+#hero{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:40px;
+
+    padding:
+
+        140px 8%
+        100px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+/* ==========================================================
+   HERO LEFT
+========================================================== */
+
+.hero-left{
+
+    width:57%;
+
+    opacity:0;
+
+    transform:translateX(-60px);
+
+    animation:
+
+        heroAppear 1.2s
+
+        cubic-bezier(.2,.8,.2,1)
+
+        3.2s forwards;
+
+}
+
+
+.hero-left h1{
+
+    font-size:
+
+        clamp(
+            48px,
+            6vw,
+            82px
+        );
+
+    font-weight:800;
+
+    line-height:1.02;
+
+    margin-bottom:22px;
+
+    text-shadow:
+
+        0 0 20px
+        rgba(0,217,255,.25);
+
+}
+
+
+.hero-left h1 span{
+
+    display:block;
+
+    color:var(--primary);
+
+    text-shadow:
+
+        0 0 15px var(--primary),
+
+        0 0 35px rgba(0,217,255,.55),
+
+        0 0 70px rgba(0,217,255,.25);
+
+    animation:
+
+        titleGlow 4s ease-in-out infinite;
+
+}
+
+
+.hero-left h2{
+
+    font-size:27px;
+
+    font-weight:500;
+
+    line-height:1.4;
+
+    color:#91edff;
+
+    margin-bottom:28px;
+
+}
+
+
+.hero-left p{
+
+    max-width:720px;
+
+    font-size:17px;
+
+    line-height:1.9;
+
+    color:var(--text);
+
+    margin-bottom:38px;
+
+}
+
+
+/* ==========================================================
+   HERO BUTTONS
+========================================================== */
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+}
+
+
+/* ==========================================================
+   PRIMARY BUTTON
+========================================================== */
+
+.primary-btn{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:210px;
+
+    padding:15px 30px;
+
+    border-radius:50px;
+
+    text-decoration:none;
+
+    color:#00121a;
+
+    font-weight:700;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--green),
+            var(--primary)
+        );
+
+    background-size:200% auto;
+
+    box-shadow:
+
+        0 0 25px
+        rgba(0,217,255,.35);
+
+    transition:
+
+        transform .35s,
+
+        box-shadow .35s;
+
+    animation:
+
+        buttonGradient 4s linear infinite;
+
+}
+
+
+.primary-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-100%;
+
+    width:60%;
+
+    height:100%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.7),
+            transparent
+        );
+
+    transform:skewX(-20deg);
+
+    animation:
+
+        buttonSweep 3.5s infinite;
+
+}
+
+
+.primary-btn:hover{
+
+    transform:
+
+        translateY(-6px)
+        scale(1.04);
+
+    box-shadow:
+
+        0 0 35px
+        rgba(0,217,255,.7),
+
+        0 0 70px
+        rgba(0,255,179,.25);
+
+}
+
+
+/* ==========================================================
+   SECONDARY BUTTON
+========================================================== */
+
+.secondary-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:170px;
+
+    padding:14px 30px;
+
+    border-radius:50px;
+
+    border:
+
+        1px solid
+        var(--primary);
+
+    color:white;
+
+    text-decoration:none;
+
+    background:
+
+        rgba(0,217,255,.04);
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+
+        inset 0 0 20px
+        rgba(0,217,255,.03);
+
+    transition:.35s;
+
+}
+
+
+.secondary-btn:hover{
+
+    color:var(--primary);
+
+    background:
+
+        rgba(0,217,255,.12);
+
+    transform:
+
+        translateY(-6px)
+        scale(1.04);
+
+    box-shadow:
+
+        0 0 30px
+        rgba(0,217,255,.3),
+
+        inset 0 0 20px
+        rgba(0,217,255,.1);
+
+}
+
+
+/* ==========================================================
+   HERO RIGHT
+========================================================== */
+
+.hero-right{
+
+    width:40%;
+
+    min-height:580px;
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+/* ==========================================================
+   CENTRAL GLOW
+========================================================== */
+
+.hero-right::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:400px;
+
+    height:400px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,217,255,.28),
+            rgba(111,92,255,.10) 40%,
+            transparent 70%
+        );
+
+    filter:blur(35px);
+
+    animation:
+
+        pulseGlow 5s ease-in-out infinite;
+
+}
+
+
+/* ==========================================================
+   EARTH
+========================================================== */
+
+.earth{
+
+    position:absolute;
+
+    width:270px;
+
+    left:50%;
+
+    top:50%;
+
+    z-index:5;
+
+    filter:
+
+        drop-shadow(
+            0 0 25px
+            rgba(0,217,255,.4)
+        );
+
+    animation:
+
+        earthRotate 70s linear infinite,
+
+        earthFloat 6s ease-in-out infinite;
+
+}
+
+
+/* ==========================================================
+   DEEP SPACE DEFENSE
+========================================================== */
+
+.deep-defense{
+
+    position:absolute;
+
+    width:290px;
+
+    right:-10px;
+
+    bottom:55px;
+
+    z-index:3;
+
+    filter:
+
+        drop-shadow(
+            0 0 25px
+            rgba(0,217,255,.45)
+        );
+
+    animation:
+
+        defenseFloat 7s ease-in-out infinite;
+
+}
+
+
+/* ==========================================================
+   SATELLITE
+========================================================== */
+
+.satellite{
+
+    position:absolute;
+
+    width:90px;
+
+    top:45px;
+
+    right:45px;
+
+    z-index:10;
+
+    filter:
+
+        drop-shadow(
+            0 0 12px
+            rgba(255,255,255,.6)
+        )
+
+        drop-shadow(
+            0 0 25px
+            rgba(0,217,255,.25)
+        );
+
+    animation:
+
+        satelliteFloat 4s ease-in-out infinite;
+
+}
+
+
+/* ==========================================================
+   EARTH ROTATION
+========================================================== */
+
+@keyframes earthRotate{
+
+    from{
+
+        rotate:0deg;
+
+    }
+
+    to{
+
+        rotate:360deg;
+
+    }
+
+}
+
+
+@keyframes earthFloat{
+
+    0%,100%{
+
+        translate:0 0;
+
+    }
+
+    50%{
+
+        translate:0 -16px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   DEFENSE FLOAT
+========================================================== */
+
+@keyframes defenseFloat{
+
+    0%,100%{
+
+        transform:
+            translateY(0)
+            rotate(-2deg);
+
+    }
+
+    25%{
+
+        transform:
+            translateY(-12px)
+            rotate(1deg);
+
+    }
+
+    50%{
+
+        transform:
+            translateY(-24px)
+            rotate(2deg);
+
+    }
+
+    75%{
+
+        transform:
+            translateY(-10px)
+            rotate(-1deg);
+
+    }
+
+}
+
+
+/* ==========================================================
+   SATELLITE FLOAT
+========================================================== */
+
+@keyframes satelliteFloat{
+
+    0%,100%{
+
+        transform:
+            translate(0,0)
+            rotate(0deg);
+
+    }
+
+    50%{
+
+        transform:
+            translate(-20px,-15px)
+            rotate(8deg);
+
+    }
+
+}
+
+
+/* ==========================================================
+   GLOW
+========================================================== */
+
+@keyframes pulseGlow{
+
+    0%,100%{
+
+        opacity:.45;
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        opacity:.85;
+
+        transform:scale(1.1);
+
+    }
+
+}
+
+
+/* ==========================================================
+   HERO ANIMATION
+========================================================== */
+
+@keyframes heroAppear{
 
     to{
 
@@ -805,85 +1593,68 @@ nav ul li a:hover::after{
 
 }
 
-@keyframes rotateEarth{
 
-    from{
+@keyframes titleGlow{
 
-        transform:rotate(0deg);
+    0%,100%{
+
+        filter:brightness(1);
 
     }
+
+    50%{
+
+        filter:brightness(1.25);
+
+    }
+
+}
+
+
+@keyframes buttonGradient{
 
     to{
 
-        transform:rotate(360deg);
+        background-position:200% center;
 
     }
 
 }
 
-@keyframes floatEarth{
 
-    0%,100%{
-
-        translate:0 0;
-
-    }
-
-    50%{
-
-        translate:0 -18px;
-
-    }
-
-}
-
-@keyframes orbitSatellite{
+@keyframes buttonSweep{
 
     0%{
 
-        transform:
-
-            rotate(0deg)
-
-            translateX(180px)
-
-            rotate(0deg);
+        left:-100%;
 
     }
 
-    100%{
+    40%,100%{
 
-        transform:
-
-            rotate(360deg)
-
-            translateX(180px)
-
-            rotate(-360deg);
+        left:150%;
 
     }
 
 }
 
-@keyframes pulseGlow{
+
+@keyframes logoFloat{
 
     0%,100%{
 
-        opacity:.5;
-
-        transform:scale(1);
+        transform:translateY(0);
 
     }
 
     50%{
 
-        opacity:1;
-
-        transform:scale(1.08);
+        transform:translateY(-4px);
 
     }
 
 }
+
 
 /* ==========================================================
    SCROLL INDICATOR
@@ -899,23 +1670,28 @@ nav ul li a:hover::after{
 
     transform:translateX(-50%);
 
+    z-index:20;
+
 }
 
-.scroll-indicator span{
 
-    display:block;
+.scroll-indicator span{
 
     width:28px;
 
     height:48px;
 
-    border:2px solid white;
+    display:block;
 
-    border-radius:25px;
+    border:
 
-    position:relative;
+        2px solid
+        rgba(255,255,255,.7);
+
+    border-radius:30px;
 
 }
+
 
 .scroll-indicator span::before{
 
@@ -923,13 +1699,13 @@ nav ul li a:hover::after{
 
     position:absolute;
 
-    width:6px;
+    width:5px;
 
     height:10px;
 
-    background:white;
+    border-radius:10px;
 
-    border-radius:20px;
+    background:var(--primary);
 
     left:50%;
 
@@ -937,13 +1713,20 @@ nav ul li a:hover::after{
 
     transform:translateX(-50%);
 
-    animation:scrollMouse 2s infinite;
+    box-shadow:
+
+        0 0 10px var(--primary);
+
+    animation:
+
+        scrollMouse 2s infinite;
 
 }
 
+
 @keyframes scrollMouse{
 
-    from{
+    0%{
 
         top:8px;
 
@@ -951,7 +1734,7 @@ nav ul li a:hover::after{
 
     }
 
-    to{
+    100%{
 
         top:28px;
 
@@ -961,96 +1744,69 @@ nav ul li a:hover::after{
 
 }
 
+
 /* ==========================================================
-   FLOATING PARTICLES
+   GENERAL SECTIONS
 ========================================================== */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    background-image:
-
-        radial-gradient(circle,rgba(255,255,255,.5) 1px,transparent 1px);
-
-    background-size:160px 160px;
-
-    opacity:.08;
-
-    animation:particlesMove 80s linear infinite;
-
-    z-index:-5;
-
-}
-
-@keyframes particlesMove{
-
-    from{
-
-        transform:translateY(0);
-
-    }
-
-    to{
-
-        transform:translateY(1000px);
-
-    }
-
-}
-/* ==========================================================
-   PART 3
-   ABOUT • FEATURES • AI WORKFLOW • STATISTICS
-==========================================================*/
-
-/* ==============================
-   SECTION DEFAULT
-============================== */
 
 section{
 
-    padding:120px 8%;
     position:relative;
 
+    padding:120px 8%;
+
 }
+
 
 section h2{
 
-    font-size:48px;
     text-align:center;
+
+    font-size:
+
+        clamp(
+            36px,
+            5vw,
+            52px
+        );
+
     color:var(--primary);
+
     margin-bottom:25px;
 
     text-shadow:
-        0 0 15px rgba(0,217,255,.4);
+
+        0 0 20px
+        rgba(0,217,255,.35);
 
 }
 
-section p{
+
+section > p{
 
     max-width:900px;
+
     margin:auto;
+
     text-align:center;
+
     line-height:1.9;
-    color:#d8d8d8;
+
+    color:var(--text);
 
 }
 
-/* ==============================
+
+/* ==========================================================
    ABOUT
-============================== */
+========================================================== */
 
 #about{
 
-    position:relative;
+    overflow:hidden;
 
 }
+
 
 #about::before{
 
@@ -1058,45 +1814,102 @@ section p{
 
     position:absolute;
 
-    width:420px;
-    height:420px;
+    width:500px;
+
+    height:500px;
+
+    left:-250px;
+
+    top:10%;
+
+    border-radius:50%;
 
     background:
-    radial-gradient(circle,
-    rgba(0,217,255,.12),
-    transparent);
 
-    left:-180px;
-    top:20%;
+        radial-gradient(
+            circle,
+            rgba(0,217,255,.12),
+            transparent 70%
+        );
 
-    filter:blur(35px);
-
-}
-
-#about p{
-
-    margin-top:35px;
-
-    font-size:18px;
+    filter:blur(40px);
 
 }
 
-/* ==============================
+
+.about-image{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:45px;
+
+}
+
+
+.about-image img{
+
+    width:
+
+        min(380px,80vw);
+
+    border-radius:25px;
+
+    filter:
+
+        drop-shadow(
+            0 0 30px
+            rgba(0,217,255,.35)
+        );
+
+    transition:.5s;
+
+}
+
+
+.about-image img:hover{
+
+    transform:
+
+        translateY(-10px)
+        scale(1.03);
+
+    filter:
+
+        drop-shadow(
+            0 0 50px
+            rgba(0,217,255,.65)
+        );
+
+}
+
+
+/* ==========================================================
    FEATURE GRID
-============================== */
+========================================================== */
 
 .feature-grid{
 
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fit,minmax(260px,1fr));
 
-    gap:35px;
+        repeat(
+            auto-fit,
+            minmax(250px,1fr)
+        );
 
-    margin-top:70px;
+    gap:30px;
+
+    margin-top:65px;
 
 }
+
+
+/* ==========================================================
+   FEATURE CARD
+========================================================== */
 
 .card{
 
@@ -1104,19 +1917,44 @@ section p{
 
     padding:35px;
 
-    border-radius:22px;
+    min-height:210px;
 
     overflow:hidden;
 
-    background:rgba(255,255,255,.05);
+    border-radius:24px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
 
     backdrop-filter:blur(18px);
 
-    border:1px solid rgba(255,255,255,.08);
+    border:
 
-    transition:.4s;
+        1px solid
+        rgba(255,255,255,.09);
+
+    box-shadow:
+
+        0 15px 40px
+        rgba(0,0,0,.2);
+
+    transition:
+
+        transform .45s,
+
+        box-shadow .45s,
+
+        border-color .45s;
 
 }
+
+
+/* Moving border */
 
 .card::before{
 
@@ -1124,61 +1962,135 @@ section p{
 
     position:absolute;
 
-    width:160%;
-    height:160%;
+    inset:-2px;
+
+    border-radius:24px;
 
     background:
-    linear-gradient(
-    45deg,
-    transparent,
-    rgba(0,217,255,.15),
-    transparent);
 
-    left:-140%;
-    top:-140%;
+        conic-gradient(
+            transparent,
+            var(--primary),
+            transparent 30%
+        );
 
-    transition:.7s;
+    opacity:0;
+
+    animation:
+
+        cardRotate 4s linear infinite;
+
+    transition:.4s;
+
+    z-index:-1;
 
 }
+
 
 .card:hover::before{
 
-    left:100%;
-    top:100%;
+    opacity:.7;
 
 }
+
 
 .card:hover{
 
     transform:
-        translateY(-12px);
+
+        translateY(-12px)
+        scale(1.02);
+
+    border-color:
+
+        rgba(0,217,255,.35);
 
     box-shadow:
-        0 0 40px rgba(0,217,255,.3);
+
+        0 20px 60px
+        rgba(0,217,255,.15),
+
+        0 0 35px
+        rgba(0,217,255,.12);
 
 }
+
 
 .card h3{
 
     color:var(--primary);
 
-    margin-bottom:18px;
+    font-size:22px;
 
-    font-size:24px;
+    margin-bottom:15px;
 
 }
+
 
 .card p{
 
-    font-size:16px;
+    color:var(--text);
 
-    color:#d5d5d5;
+    line-height:1.8;
 
 }
 
-/* ==============================
+
+@keyframes cardRotate{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ==========================================================
    WORKFLOW
-============================== */
+========================================================== */
+
+.ai-image{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:45px;
+
+}
+
+
+.ai-image img{
+
+    width:
+
+        min(470px,85vw);
+
+    border-radius:25px;
+
+    filter:
+
+        drop-shadow(
+            0 0 35px
+            rgba(111,92,255,.45)
+        );
+
+    transition:.5s;
+
+}
+
+
+.ai-image img:hover{
+
+    transform:
+
+        translateY(-12px)
+        scale(1.02);
+
+}
+
 
 .timeline{
 
@@ -1186,213 +2098,116 @@ section p{
 
     justify-content:center;
 
+    align-items:center;
+
     flex-wrap:wrap;
 
     gap:25px;
 
-    margin-top:70px;
+    margin-top:65px;
 
 }
 
-.timeline div{
 
-    position:relative;
+.timeline div{
 
     padding:18px 28px;
 
     border-radius:50px;
 
-    background:rgba(255,255,255,.06);
+    background:
+
+        rgba(255,255,255,.055);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.09);
 
     backdrop-filter:blur(15px);
 
-    border:1px solid rgba(255,255,255,.08);
+    color:#eafcff;
 
     transition:.35s;
 
 }
+
 
 .timeline div:hover{
 
-    background:rgba(0,217,255,.18);
-
-    transform:translateY(-6px);
-
-    box-shadow:
-        0 0 30px rgba(0,217,255,.25);
-
-}
-
-.timeline div::after{
-
-    content:"➜";
-
-    position:absolute;
-
-    right:-22px;
-
     color:var(--primary);
 
-}
+    background:
 
-.timeline div:last-child::after{
+        rgba(0,217,255,.10);
 
-    display:none;
+    border-color:
 
-}
+        rgba(0,217,255,.4);
 
-/* ==============================
-   STATISTICS
-============================== */
+    transform:
 
-.statistics{
-
-    margin-top:90px;
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-
-    gap:30px;
-
-}
-
-.stat-card{
-
-    text-align:center;
-
-    padding:35px;
-
-    border-radius:20px;
-
-    background:rgba(255,255,255,.05);
-
-    backdrop-filter:blur(15px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:.35s;
-
-}
-
-.stat-card:hover{
-
-    transform:translateY(-10px);
+        translateY(-8px)
+        scale(1.04);
 
     box-shadow:
-        0 0 35px rgba(0,217,255,.3);
+
+        0 0 25px
+        rgba(0,217,255,.2);
 
 }
 
-.stat-card h1{
 
-    font-size:55px;
-
-    color:var(--primary);
-
-    margin-bottom:10px;
-
-}
-
-.stat-card p{
-
-    color:#d7d7d7;
-
-}
-
-/* ==============================
-   SECTION DIVIDER
-============================== */
-
-.wave{
-
-    position:absolute;
-
-    bottom:-2px;
-
-    left:0;
-
-    width:100%;
-
-    overflow:hidden;
-
-    line-height:0;
-
-}
-
-.wave svg{
-
-    display:block;
-
-    width:100%;
-
-    height:90px;
-
-}
-
-.wave path{
-
-    fill:#020611;
-
-}
 /* ==========================================================
-   PART 4
-   FOOTER • DASHBOARD • PREMIUM EFFECTS • RESPONSIVE
-==========================================================*/
-
-/* ==============================
-   DASHBOARD PREVIEW
-============================== */
+   DASHBOARD
+========================================================== */
 
 #dashboard{
 
-    padding:120px 8%;
     text-align:center;
-    position:relative;
 
 }
 
-#dashboard h2{
-
-    font-size:48px;
-    color:var(--primary);
-    margin-bottom:20px;
-
-}
 
 #dashboard p{
 
     max-width:800px;
-    margin:auto;
-    color:#d8d8d8;
-    line-height:1.8;
-    margin-bottom:60px;
+
+    margin:
+
+        0 auto 45px;
 
 }
 
+
 .dashboard-preview{
 
-    width:100%;
     max-width:1100px;
 
     margin:auto;
-
-    background:rgba(255,255,255,.06);
-
-    backdrop-filter:blur(20px);
-
-    border:1px solid rgba(255,255,255,.08);
 
     border-radius:25px;
 
     overflow:hidden;
 
+    background:
+
+        rgba(255,255,255,.05);
+
+    backdrop-filter:blur(20px);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.09);
+
     box-shadow:
 
-        0 0 45px rgba(0,217,255,.15);
+        0 0 50px
+        rgba(0,217,255,.12);
 
 }
+
 
 .dashboard-top{
 
@@ -1400,59 +2215,82 @@ section p{
 
     justify-content:space-between;
 
-    padding:20px 35px;
+    padding:20px 30px;
 
-    background:rgba(255,255,255,.04);
+    background:
+
+        rgba(255,255,255,.04);
 
 }
 
+
 .dashboard-body{
 
-    padding:40px;
+    padding:35px;
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:
+
+        repeat(
+            auto-fit,
+            minmax(210px,1fr)
+        );
 
     gap:25px;
 
 }
 
+
 .dashboard-card{
 
-    background:rgba(255,255,255,.05);
+    padding:28px;
 
     border-radius:18px;
 
-    padding:30px;
+    background:
+
+        rgba(255,255,255,.045);
 
     transition:.35s;
 
 }
 
+
 .dashboard-card:hover{
 
-    transform:translateY(-8px);
+    transform:
+
+        translateY(-8px);
+
+    background:
+
+        rgba(0,217,255,.08);
 
     box-shadow:
 
-        0 0 35px rgba(0,217,255,.25);
+        0 0 30px
+        rgba(0,217,255,.2);
 
 }
+
 
 .dashboard-card h3{
 
     color:var(--primary);
 
-    margin-bottom:15px;
+    margin-bottom:12px;
 
 }
 
-/* ==============================
+
+/* ==========================================================
    FOOTER
-============================== */
+========================================================== */
 
 footer{
+
+    position:relative;
 
     padding:70px 8%;
 
@@ -1460,35 +2298,33 @@ footer{
 
     background:#01030a;
 
-    border-top:1px solid rgba(255,255,255,.08);
+    border-top:
+
+        1px solid
+        rgba(255,255,255,.08);
 
 }
+
 
 footer p{
 
-    color:#9c9c9c;
+    color:#8499a8;
 
-    margin-top:12px;
+    margin-top:10px;
 
 }
 
-footer a{
+
+footer p:first-child{
 
     color:var(--primary);
 
-    text-decoration:none;
-
 }
 
-footer a:hover{
 
-    text-decoration:underline;
-
-}
-
-/* ==============================
-   PREMIUM GLOW
-============================== */
+/* ==========================================================
+   FLOATING GLOW
+========================================================== */
 
 .glow{
 
@@ -1502,100 +2338,55 @@ footer a:hover{
 
     background:
 
-    radial-gradient(circle,
-
-    rgba(0,217,255,.18),
-
-    transparent 70%);
+        radial-gradient(
+            circle,
+            rgba(0,217,255,.14),
+            transparent 70%
+        );
 
     filter:blur(40px);
 
-    z-index:-1;
+    pointer-events:none;
 
 }
+
 
 .glow.left{
 
+    left:-220px;
+
     top:10%;
 
-    left:-180px;
-
 }
+
 
 .glow.right{
 
+    right:-220px;
+
     bottom:5%;
 
-    right:-180px;
-
 }
 
-/* ==============================
-   GLASS EFFECT
-============================== */
 
-.glass{
-
-    background:rgba(255,255,255,.06);
-
-    backdrop-filter:blur(15px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-}
-
-/* ==============================
-   HOVER EFFECTS
-============================== */
-
-.card,
-.dashboard-card,
-.primary-btn,
-.secondary-btn{
-
-    transition:all .35s ease;
-
-}
-
-.card:hover{
-
-    transform:
-
-        translateY(-10px)
-
-        scale(1.03);
-
-}
-
-.primary-btn:hover{
-
-    box-shadow:
-
-        0 0 55px rgba(0,217,255,.65);
-
-}
-
-.secondary-btn:hover{
-
-    box-shadow:
-
-        0 0 30px rgba(0,217,255,.25);
-
-}
-
-/* ==============================
-   SECTION ANIMATION
-============================== */
+/* ==========================================================
+   SCROLL REVEAL
+========================================================== */
 
 .hidden{
 
     opacity:0;
 
-    transform:translateY(70px);
+    transform:translateY(60px);
 
-    transition:1s;
+    transition:
+
+        opacity 1s ease,
+
+        transform 1s ease;
 
 }
+
 
 .show{
 
@@ -1605,191 +2396,296 @@ footer a:hover{
 
 }
 
-/* ==============================
+
+/* ==========================================================
    RESPONSIVE
-============================== */
+========================================================== */
 
 @media(max-width:1100px){
 
-.hero-left h1{
+    .hero-left h1{
 
-    font-size:62px;
+        font-size:62px;
+
+    }
+
+    .hero-left h2{
+
+        font-size:23px;
+
+    }
+
+    .deep-defense{
+
+        width:240px;
+
+    }
 
 }
 
-.hero-left h2{
 
-    font-size:24px;
-
-}
-
-}
+/* ==========================================================
+   TABLET
+========================================================== */
 
 @media(max-width:900px){
 
-nav{
+    nav{
 
-    flex-direction:column;
+        width:94%;
 
-    gap:20px;
+        padding:14px 20px;
 
-    border-radius:20px;
+    }
 
-    padding:18px;
+    .logo span{
+
+        font-size:16px;
+
+    }
+
+    nav ul{
+
+        gap:15px;
+
+    }
+
+    #hero{
+
+        flex-direction:column-reverse;
+
+        text-align:center;
+
+        padding-top:170px;
+
+    }
+
+    .hero-left{
+
+        width:100%;
+
+    }
+
+    .hero-right{
+
+        width:100%;
+
+        min-height:470px;
+
+    }
+
+    .hero-buttons{
+
+        justify-content:center;
+
+    }
+
+    .earth{
+
+        width:220px;
+
+    }
+
+    .deep-defense{
+
+        width:220px;
+
+        right:0;
+
+        bottom:45px;
+
+    }
+
+    .satellite{
+
+        width:70px;
+
+        right:25px;
+
+        top:30px;
+
+    }
 
 }
 
-nav ul{
 
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-}
-
-#hero{
-
-    flex-direction:column-reverse;
-
-    text-align:center;
-
-    padding-top:180px;
-
-}
-
-.hero-left{
-
-    width:100%;
-
-}
-
-.hero-right{
-
-    width:100%;
-
-    margin-bottom:50px;
-
-}
-
-.hero-buttons{
-
-    justify-content:center;
-
-}
-
-.earth{
-
-    width:280px;
-
-}
-
-.satellite{
-
-    width:100px;
-
-}
-
-}
+/* ==========================================================
+   MOBILE
+========================================================== */
 
 @media(max-width:600px){
 
-.hero-left h1{
+    nav{
 
-    font-size:44px;
+        top:10px;
+
+        width:94%;
+
+        flex-direction:column;
+
+        gap:12px;
+
+        border-radius:22px;
+
+        padding:12px;
+
+    }
+
+    .logo img{
+
+        width:38px;
+
+        height:38px;
+
+    }
+
+    .logo span{
+
+        font-size:14px;
+
+    }
+
+    nav ul{
+
+        gap:14px;
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+    }
+
+    nav ul li a{
+
+        font-size:12px;
+
+    }
+
+    #hero{
+
+        padding:
+
+            160px 25px
+            80px;
+
+    }
+
+    .hero-left h1{
+
+        font-size:44px;
+
+    }
+
+    .hero-left h2{
+
+        font-size:19px;
+
+    }
+
+    .hero-left p{
+
+        font-size:15px;
+
+    }
+
+    .hero-right{
+
+        min-height:390px;
+
+    }
+
+    .earth{
+
+        width:185px;
+
+    }
+
+    .deep-defense{
+
+        width:185px;
+
+        right:-5px;
+
+        bottom:25px;
+
+    }
+
+    .satellite{
+
+        width:58px;
+
+        top:20px;
+
+        right:10px;
+
+    }
+
+    .primary-btn,
+    .secondary-btn{
+
+        width:100%;
+
+    }
+
+    section{
+
+        padding:
+
+            90px 25px;
+
+    }
+
+    .feature-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .timeline{
+
+        flex-direction:column;
+
+    }
+
+    .timeline div{
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+    .timeline div::after{
+
+        display:none;
+
+    }
+
+    .dashboard-body{
+
+        grid-template-columns:1fr;
+
+    }
 
 }
 
-.hero-left h2{
 
-    font-size:20px;
+/* ==========================================================
+   REDUCE MOTION ACCESSIBILITY
+========================================================== */
 
-}
+@media(prefers-reduced-motion:reduce){
 
-.hero-left p{
+    *,
+    *::before,
+    *::after{
 
-    font-size:16px;
+        animation-duration:.01ms !important;
 
-}
+        animation-iteration-count:1 !important;
 
-section{
+        scroll-behavior:auto !important;
 
-    padding:90px 25px;
-
-}
-
-.dashboard-body{
-
-    grid-template-columns:1fr;
-
-}
-
-}
-/* ==============================
-   ABOUT IMAGE
-============================== */
-
-.about-image{
-
-    display:flex;
-
-    justify-content:center;
-
-    margin-bottom:50px;
-
-}
-
-
-.about-image img{
-
-    width:420px;
-
-    border-radius:25px;
-
-    filter:
-    drop-shadow(0 0 35px rgba(0,217,255,.4));
-
-    transition:.5s;
-
-}
-
-
-.about-image img:hover{
-
-    transform:scale(1.05);
-
-}
-/* ==============================
-   AI WORKFLOW IMAGE
-============================== */
-
-
-.ai-image{
-
-    display:flex;
-
-    justify-content:center;
-
-    margin-bottom:50px;
-
-}
-
-
-.ai-image img{
-
-    width:500px;
-
-    border-radius:25px;
-
-    filter:
-    drop-shadow(0 0 40px rgba(111,92,255,.5));
-
-    transition:.5s;
-
-}
-
-
-.ai-image img:hover{
-
-    transform:translateY(-10px);
+    }
 
 }

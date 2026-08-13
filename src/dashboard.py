@@ -1,138 +1,650 @@
-import tkinter as tk
-from tkinter import ttk
+# ==========================================================
+# DeepSpace CyberShield AI
+# dashboard.py
+# Flask Dashboard Backend
+# ==========================================================
 
-class Dashboard:
-    def __init__(self, dataset):
-        self.dataset = dataset
-        self.root = tk.Tk()
-        self.root.title("DeepSpace CyberShield AI Dashboard")
-        self.root.geometry("1200x700")
-        self.root.configure(bg="#1E1E1E")
-        self.create_widgets()
-        self.root.mainloop()
+from flask import Blueprint, jsonify, Response
+import pandas as pd
+import os
+import io
 
-    def create_widgets(self):
-        title = tk.Label(self.root,text="DeepSpace CyberShield AI Dashboard",
-                         font=("Arial",22,"bold"),bg="#1E1E1E",fg="cyan")
-        title.pack(pady=10)
 
-        stats=tk.Frame(self.root,bg="#1E1E1E")
-        stats.pack()
+# ==========================================================
+# DASHBOARD BLUEPRINT
+# ==========================================================
 
-        total=len(self.dataset)
-        normal=(self.dataset["status"]=="Normal").sum()
-        attacks=total-normal
+dashboard_bp = Blueprint(
+    "dashboard",
+    __name__,
+    url_prefix="/api"
+)
 
-        for i,(txt,color) in enumerate([
-            (f"Total Records : {total}","white"),
-            (f"Normal : {normal}","lightgreen"),
-            (f"Attacks : {attacks}","red")
-        ]):
-            tk.Label(stats,text=txt,font=("Arial",12,"bold"),
-                     bg="#1E1E1E",fg=color).grid(row=0,column=i,padx=20)
 
-        columns=("Source","Relay","Status","Trust","Prediction")
-        self.tree=ttk.Treeview(self.root,columns=columns,show="headings",height=18)
+# ==========================================================
+# PROJECT PATH
+# ==========================================================
 
-        for c in columns:
-            self.tree.heading(c,text=c)
-            self.tree.column(c,width=180)
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
 
-        self.tree.pack(fill="both",expand=True,padx=15,pady=15)
+DATASET_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "communication_logs.csv"
+)
 
-        for _,row in self.dataset.iterrows():
-            self.tree.insert("", "end", values=(
-                row["source"],
-                row["relay"],
-                row["status"],
-                row["trust_score"],
+
+# ==========================================================
+# LOAD DATASET
+# ==========================================================
+
+def load_dataset():
+
+    if not os.path.exists(DATASET_PATH):
+
+        print("Dataset not found:")
+        print(DATASET_PATH)
+
+        return pd.DataFrame()
+
+    try:
+
+        dataset = pd.read_csv(
+            DATASET_PATH
+        )
+
+        print(
+            f"Dataset loaded successfully: "
+            f"{len(dataset)} records"
+        )
+
+        return dataset
+
+    except Exception as error:
+
+        print(
+            "Error loading dataset:",
+            error
+        )
+
+        return pd.DataFrame()
+
+
+# ==========================================================
+# PREPARE DATA
+# ==========================================================
+
+def prepare_dataset(dataset):
+
+    if dataset.empty:
+
+        return dataset
+
+    dataset = dataset.copy()
+
+
+    # ------------------------------------------------------
+    # Required columns
+    # ------------------------------------------------------
+
+    required_columns = [
+
+        "source",
+        "relay",
+        "status",
+        "trust_score",
+        "AI_Prediction"
+
+    ]
+
+
+    for column in required_columns:
+
+        if column not in dataset.columns:
+
+            print(
+                f"Warning: Missing column: {column}"
+            )
+
+            dataset[column] = "Unknown"
+
+
+    # ------------------------------------------------------
+    # Clean trust score
+    # ------------------------------------------------------
+
+    dataset["trust_score"] = pd.to_numeric(
+
+        dataset["trust_score"],
+
+        errors="coerce"
+
+    )
+
+    dataset["trust_score"] = (
+        dataset["trust_score"]
+        .fillna(0)
+    )
+
+
+    # ------------------------------------------------------
+    # Clean text columns
+    # ------------------------------------------------------
+
+    for column in [
+
+        "source",
+        "relay",
+        "status",
+        "AI_Prediction"
+
+    ]:
+
+        dataset[column] = (
+
+            dataset[column]
+            .astype(str)
+            .str.strip()
+
+        )
+
+
+    return dataset
+
+
+# ==========================================================
+# DASHBOARD SUMMARY
+# ==========================================================
+
+@dashboard_bp.route(
+    "/summary",
+    methods=["GET"]
+)
+def dashboard_summary():
+
+    dataset = prepare_dataset(
+        load_dataset()
+    )
+
+
+    if dataset.empty:
+
+        return jsonify({
+
+            "total": 0,
+
+            "normal": 0,
+
+            "attacks": 0,
+
+            "security_score": 100
+
+        })
+
+
+    total = len(dataset)
+
+
+    normal = (
+
+        dataset["status"]
+        .str.lower()
+        .eq("normal")
+        .sum()
+
+    )
+
+
+    attacks = total - normal
+
+
+    # ------------------------------------------------------
+    # Security score
+    # ------------------------------------------------------
+
+    if total > 0:
+
+        security_score = (
+            normal / total
+        ) * 100
+
+    else:
+
+        security_score = 100
+
+
+    return jsonify({
+
+        "total": int(total),
+
+        "normal": int(normal),
+
+        "attacks": int(attacks),
+
+        "security_score": round(
+
+            float(security_score),
+
+            2
+
+        )
+
+    })
+
+
+# ==========================================================
+# COMMUNICATION RECORDS
+# ==========================================================
+
+@dashboard_bp.route(
+    "/records",
+    methods=["GET"]
+)
+def communication_records():
+
+    dataset = prepare_dataset(
+        load_dataset()
+    )
+
+
+    if dataset.empty:
+
+        return jsonify([])
+
+
+    records = []
+
+
+    for _, row in dataset.iterrows():
+
+        records.append({
+
+            "source": str(
+                row["source"]
+            ),
+
+            "relay": str(
+                row["relay"]
+            ),
+
+            "status": str(
+                row["status"]
+            ),
+
+            "trust_score": round(
+
+                float(
+                    row["trust_score"]
+                ),
+
+                2
+
+            ),
+
+            "AI_Prediction": str(
+
                 row["AI_Prediction"]
-            ))
 
-        details=tk.LabelFrame(self.root,text="Communication Details",
-                              bg="#1E1E1E",fg="cyan",
-                              font=("Arial",12,"bold"))
-        details.pack(fill="x",padx=15,pady=10)
+            )
 
-        labels=["Source","Relay","Status","Trust Score","AI Prediction","Recommendation"]
-        self.values=[]
-        for i,l in enumerate(labels):
-            tk.Label(details,text=l,bg="#1E1E1E",fg="white").grid(row=i,column=0,sticky="w",padx=10,pady=4)
-            lab=tk.Label(details,text="-",bg="#1E1E1E",fg="cyan",justify="left")
-            lab.grid(row=i,column=1,sticky="w")
-            self.values.append(lab)
+        })
 
-        self.tree.bind("<<TreeviewSelect>>",self.update_details)
 
-    def update_details(self,event):
-        item=self.tree.focus()
-        if not item:
-            return
-        vals=self.tree.item(item)["values"]
-        source,relay,status,trust,pred=vals
+    return jsonify(records)
 
-        self.values[0].config(text=source)
-        self.values[1].config(text=relay)
-        self.values[2].config(text=status)
-        self.values[3].config(text=f"{float(trust):.2f}")
 
-        if pred=="Normal":
-            self.values[4].config(text="🟢 Normal",fg="lightgreen")
-            rec="Continue Communication\nMission Secure"
-        else:
-            self.values[4].config(text="🔴 Anomaly",fg="red")
-            rec="Disconnect Relay\nNotify Ground Station\nBegin Intrusion Scan"
+# ==========================================================
+# COMPLETE DASHBOARD DATA
+# ==========================================================
 
-        self.values[5].config(text=rec,fg="orange")
+@dashboard_bp.route(
+    "/data",
+    methods=["GET"]
+)
+def dashboard_data():
 
-def launch_dashboard(dataset):
-    Dashboard(dataset)
-    import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
-import matplotlib.pyplot as plt
+    dataset = prepare_dataset(
+        load_dataset()
+    )
 
-class Dashboard:
-    def __init__(self, dataset):
-        self.dataset = dataset
-        self.root = tk.Tk()
-        self.root.title("DeepSpace CyberShield AI Dashboard")
-        self.root.geometry("900x500")
-        self.build()
 
-    def build(self):
-        ttk.Button(self.root,text="Attack Pie Chart",command=self.show_pie).pack(pady=8)
-        ttk.Button(self.root,text="Trust Bar Chart",command=self.show_bar).pack(pady=8)
-        ttk.Button(self.root,text="Refresh",command=self.refresh).pack(pady=8)
-        ttk.Button(self.root,text="Export CSV",command=self.export_csv).pack(pady=8)
-        ttk.Button(self.root,text="Future PDF Export",command=self.pdf_placeholder).pack(pady=8)
+    if dataset.empty:
 
-    def show_pie(self):
-        counts=self.dataset["status"].value_counts()
-        plt.figure(figsize=(5,5))
-        plt.pie(counts.values,labels=counts.index,autopct="%1.1f%%")
-        plt.title("Attack Distribution")
-        plt.show()
+        return jsonify({
 
-    def show_bar(self):
-        plt.figure(figsize=(7,4))
-        self.dataset.groupby("source")["trust_score"].mean().plot(kind="bar")
-        plt.title("Average Trust Score by Mission")
-        plt.ylabel("Trust Score")
-        plt.tight_layout()
-        plt.show()
+            "summary": {
 
-    def refresh(self):
-        messagebox.showinfo("Refresh","Dashboard refreshed successfully.")
+                "total": 0,
 
-    def export_csv(self):
-        path=filedialog.asksaveasfilename(defaultextension=".csv",
-                                          filetypes=[("CSV","*.csv")])
-        if path:
-            self.dataset.to_csv(path,index=False)
-            messagebox.showinfo("Export","CSV exported successfully.")
+                "normal": 0,
 
-    def pdf_placeholder(self):
-        messagebox.showinfo("Coming Soon","PDF export will be added in the next version.")
+                "attacks": 0,
 
-def launch_dashboard(dataset):
-    Dashboard(dataset).root.mainloop()
+                "security_score": 100
+
+            },
+
+            "records": []
+
+        })
+
+
+    total = len(dataset)
+
+
+    normal = (
+
+        dataset["status"]
+        .str.lower()
+        .eq("normal")
+        .sum()
+
+    )
+
+
+    attacks = total - normal
+
+
+    security_score = (
+
+        (normal / total) * 100
+
+        if total > 0
+
+        else 100
+
+    )
+
+
+    records = []
+
+
+    for _, row in dataset.iterrows():
+
+        records.append({
+
+            "source": str(
+                row["source"]
+            ),
+
+            "relay": str(
+                row["relay"]
+            ),
+
+            "status": str(
+                row["status"]
+            ),
+
+            "trust_score": round(
+
+                float(
+                    row["trust_score"]
+                ),
+
+                2
+
+            ),
+
+            "AI_Prediction": str(
+
+                row["AI_Prediction"]
+
+            )
+
+        })
+
+
+    return jsonify({
+
+        "summary": {
+
+            "total": int(total),
+
+            "normal": int(normal),
+
+            "attacks": int(attacks),
+
+            "security_score": round(
+
+                float(
+                    security_score
+                ),
+
+                2
+
+            )
+
+        },
+
+        "records": records
+
+    })
+
+
+# ==========================================================
+# ATTACK DISTRIBUTION
+# ==========================================================
+
+@dashboard_bp.route(
+    "/attack-distribution",
+    methods=["GET"]
+)
+def attack_distribution():
+
+    dataset = prepare_dataset(
+        load_dataset()
+    )
+
+
+    if dataset.empty:
+
+        return jsonify({
+
+            "normal": 0,
+
+            "attacks": 0
+
+        })
+
+
+    normal = (
+
+        dataset["status"]
+        .str.lower()
+        .eq("normal")
+        .sum()
+
+    )
+
+
+    attacks = len(dataset) - normal
+
+
+    return jsonify({
+
+        "normal": int(normal),
+
+        "attacks": int(attacks)
+
+    })
+
+
+# ==========================================================
+# TRUST SCORES
+# ==========================================================
+
+@dashboard_bp.route(
+    "/trust-scores",
+    methods=["GET"]
+)
+def trust_scores():
+
+    dataset = prepare_dataset(
+        load_dataset()
+    )
+
+
+    if dataset.empty:
+
+        return jsonify([])
+
+
+    grouped = (
+
+        dataset
+        .groupby("source")["trust_score"]
+        .mean()
+
+    )
+
+
+    result = []
+
+
+    for source, score in grouped.items():
+
+        result.append({
+
+            "source": str(source),
+
+            "trust_score": round(
+
+                float(score),
+
+                3
+
+            )
+
+        })
+
+
+    return jsonify(result)
+
+
+# ==========================================================
+# REFRESH DASHBOARD
+# ==========================================================
+
+@dashboard_bp.route(
+    "/refresh",
+    methods=["GET"]
+)
+def refresh_dashboard():
+
+    dataset = prepare_dataset(
+        load_dataset()
+    )
+
+
+    if dataset.empty:
+
+        return jsonify({
+
+            "success": False,
+
+            "message":
+                "Dataset not found or empty."
+
+        })
+
+
+    return jsonify({
+
+        "success": True,
+
+        "message":
+            "Dashboard refreshed successfully.",
+
+        "records": int(
+            len(dataset)
+        )
+
+    })
+
+
+# ==========================================================
+# EXPORT CSV
+# ==========================================================
+
+@dashboard_bp.route(
+    "/export",
+    methods=["GET"]
+)
+def export_csv():
+
+    dataset = prepare_dataset(
+        load_dataset()
+    )
+
+
+    if dataset.empty:
+
+        return jsonify({
+
+            "success": False,
+
+            "message":
+                "No dataset available."
+
+        }), 404
+
+
+    output = io.StringIO()
+
+
+    dataset.to_csv(
+
+        output,
+
+        index=False
+
+    )
+
+
+    csv_data = output.getvalue()
+
+
+    return Response(
+
+        csv_data,
+
+        mimetype="text/csv",
+
+        headers={
+
+            "Content-Disposition":
+
+                "attachment; "
+                "filename="
+                "cybershield_communication_logs.csv"
+
+        }
+
+    )
+
+
+# ==========================================================
+# PYTHON HELPER
+# ==========================================================
+
+def get_dashboard_data():
+
+    """
+    Returns the cleaned communication dataset.
+
+    This function can be imported by other
+    Python modules in the project.
+    """
+
+    dataset = prepare_dataset(
+        load_dataset()
+    )
+
+    return dataset
+
+
+# ==========================================================
+# END OF dashboard.py
+# ==========================================================
